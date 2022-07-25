@@ -1,0 +1,228 @@
+#!/usr/bin/env python3
+
+#                      _              _     
+#                     | |            | |    
+#   ___ __ _  __ _ ___| |_ ___   ___ | |___ 
+#  / __/ _` |/ _` / __| __/ _ \ / _ \| / __|
+# | (_| (_| | (_| \__ \ || (_) | (_) | \__ \
+#  \___\__,_|\__,_|___/\__\___/ \___/|_|___/
+
+
+'''
+A Convergent Amino Acid Substitution identification 
+and analysis toolbox
+
+Author:         Fabio Barteri (fabio.barteri@upf.edu)
+
+Contributors:   Alejandro Valenzuela (alejandro.valenzuela@upf.edu)
+                Xavier Farré (xfarrer@igtp.cat),
+                David de Juan (david.juan@upf.edu).
+
+MODULE NAME:    ct
+DESCRIPTION:    Launcher script. Calls the different tools.
+DEPENDENCIES:   TBD
+'''
+
+### Introduction
+
+# Castools is a set of bioinformatics tools to detect and analyze
+# convergent amino acid substitutions from multiple sequence alignments (MSA) of orthologous proteins.  
+
+### Application info and general help
+
+application_info = '''
+CAASTOOLS version 0.9 (beta)
+Convergent Amino Acid Substitution detection and analysis toolbox
+'''
+
+genhelp = '''
+General usage:          > ct [tool] [options]
+Help for single tool:   > ct [tool] --help
+
+Tools           Description
+--------        -------------------------------------------------
+
+discovery       Detects Convergent Amino Acid Substitutions (CAAS) from
+                a single Multiple Sequence Alignment (MSA).
+
+simulate        Simulates virtual phenotypes for CAAS bootstrap analysis.
+
+bootstrap       Runs CAAS bootstrap analysis on a on a single MSA.
+
+'''
+
+### Imports
+
+import sys                                          # for tool selection and more
+from optparse import OptionParser                   # for single option parser
+from modules.deps import check_dependencies         # 
+
+#### PROGRAM CHECK ####################################################################################################
+########################################################################################################################
+
+
+if len(sys.argv) == 1:                                                  # The user didn't tape anything after "ct"
+    print(application_info)
+    print(genhelp)                                                      # Print toolbox-wide help
+    print("\n\n****ERROR: please, select a tool\n\n")
+    exit()
+
+tool = sys.argv[1]
+
+if tool.lower() == "help":                                              # The user requested the toolbox-wide help prompt (genhelp)
+    print(application_info)
+    print(genhelp)                                                      # Print toolbox-wide help
+    exit()
+
+if tool.lower() not in ("discovery", "simulate", "bootstrap"):          # Check: the user mistyped the name of a tool
+    print(application_info)
+    print(genhelp)                                                      # Print toolbox-wide help
+    exit()
+
+
+
+
+#### TOOL 1. DISCOVERY ######################################################################################################
+########################################################################################################################
+
+if tool.lower() == "discovery":
+
+    ### 1.1 Check the dependencies
+    check_dependencies("discovery", ["biopython"])
+
+    ### 1.2 Init the input parser
+    parser = OptionParser()
+
+
+    ### 1.3 The mandatory inputs
+
+    ###     1.3.1 Input alignment
+    parser.add_option("-a", "--alignment", dest="single_alignment",
+                    help="Multiple Sequence Alignment (MSA) file.", default = "none")
+    ###     1.3.2 Alignment format
+    parser.add_option("--fmt", dest="ali_format",
+                    help="File format of the MSA file. Default: clustal. Accepted: clustal, emboss, fasta, \
+                    fasta-m10, ig, maf, mauve, msf, nexus, phylip, phylip-sequential, phylip-relaxed, stockholm.", default = "clustal")
+    ###     1.3.3 Config file
+    parser.add_option("-t", "--traitfile", dest="config_file",
+                    help="The config file (read documentation for file formatting)", default = "none")
+    
+    ###     1.3.4 Output file (the table)
+    parser.add_option("-o", "--output", dest="output_file",
+                    help="The output file, where the CAAS discovery table will be printed", default = "none")
+    
+
+
+    ### 1.4 Optional and filtering inputs
+
+    ###     1.4.1 limit output to scenario (default: all scenarios)
+
+    # Which scenarios to be included                                                                                                        
+    parser.add_option("--scenarios", dest="scenarios_string",
+                    help="Limit the result to some scenarios. Scenarios are indicated with numbers from 1 to 4 and must \
+                        be provided as comma separated (e.g.: -s 1,2,3). See documentation for more details on the scenarios", default = "1,2,3")
+
+    ###     1.4.2 filter per gaps 
+
+    # Max background gaps
+    parser.add_option("--max_bg_gaps", dest="max_bg_gaps_string",
+                    help="Filter by number of gaps in the background\
+                        e.g. --max_bg_gaps 3 will accept positions with less than 3 gaps in bg. Default = nofilter (all gaps accepted).", default = "nofilter")
+
+    # Max foreground gaps
+    parser.add_option("--max_fg_gaps", dest="max_fg_gaps_string",
+                    help="Filter by number of gaps in the foreground.\
+                        e.g. --max_bg_gaps 3 will accept positions with less than 3 gaps in fg. Default = nofilter (all gaps accepted).", default = "nofilter")
+
+    # Max overall gaps (fg + bg)
+    parser.add_option("--max_gaps", dest="max_gaps_string",
+                    help="Filter by number of gaps in foreground and background.\
+                        e.g. --max_bg_gaps 3 will accept positions with less than 3 gaps in fg and bg. Default = nofilter (all gaps accepted).", default = "nofilter")
+
+    # Max gaps per position
+    parser.add_option("--max_gaps_per_position", dest="max_gaps_pos_string",
+                    help="Max gap ratio admitted in a single alignment position.", default = "0.5")
+
+    ###     1.4.3 filter for missing species
+
+    # Max background missing species
+    parser.add_option("--max_bg_miss", dest="max_bg_miss_string",
+                    help="Filter by number of miss in the background\
+                        e.g. --max_bg_miss 3 will accept positions with less than 3 miss in bg. Default = nofilter (all miss accepted).", default = "nofilter")
+
+    ###     1.4.4 Max foreground missing species
+    parser.add_option("--max_fg_miss", dest="max_fg_miss_string",
+                    help="Filter by number of miss in the foreground.\
+                        e.g. --max_bg_miss 3 will accept positions with less than 3 miss in fg. Default = nofilter (all miss accepted).", default = "nofilter")
+
+    # Max overall missing species (fg + bg)
+    parser.add_option("--max_miss", dest="max_miss_string",
+                    help="Filter by number of miss in foreground and background.\
+                        e.g. --max_bg_miss 3 will accept positions with less than 3 miss in fg and bg. Default = nofilter (all miss accepted).", default = "nofilter")
+
+
+    ### 1.5 Usage
+
+    parser.usage = "ct discoevery -a $alignment_file -t $trait_file -o $output_file --fmt $alignment_format (default:clustal)"
+
+    ### 1.6 Parse the options
+
+    (options, args) = parser.parse_args()
+
+    ### 1.7 Check the options
+
+    missing_option_messages = []
+
+    if options.single_alignment == "none":
+        missing_option_messages.append("No input MSA file provided")
+    
+    if options.config_file == "none":
+        missing_option_messages.append("No config file provided")
+
+    if options.output_file == "none":
+        missing_option_messages.append("Output not specified")
+    
+    if len(missing_option_messages) > 0:
+        print("\n\n****ERROR: mandatory input missing:")
+        print("\n".join(missing_option_messages))
+        print("")
+        print(parser.usage)
+        print("")
+        print("")
+        exit()
+
+
+    ### 1.8 Import the modules
+
+    from modules.disco import *
+    from modules.runslice import runslice
+
+    ### 1.9 PROCEDURE Step 1- Slice the alignment
+
+    sliced_alignment = runslice(options)
+
+    ### 1.10 PROCEDURE Step 2- Run the discovery
+
+    pval_dictionary = {}
+
+    discovery( 
+                input_cfg = options.config_file,
+                sliced_object = sliced_alignment,
+                max_fg_gaps = options.max_fg_gaps_string,
+                max_bg_gaps = options.max_bg_gaps_string,
+                max_overall_gaps = options.max_gaps_string,
+
+                max_fg_miss = options.max_fg_miss_string,
+                max_bg_miss = options.max_bg_miss_string,
+                max_overall_miss = options.max_miss_string,
+
+                admitted_scenarios = options.scenarios_string,
+                output_file = options.output_file)
+
+
+
+#### TOOL 2. SIMULATE ######################################################################################################
+########################################################################################################################
+
+#### TOOL 3. BOOTSTRAP ######################################################################################################
+########################################################################################################################
