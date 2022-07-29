@@ -36,6 +36,7 @@ fetch_caas()                fetches caas per each thing
 
 from modules.pindex import *
 from modules.alimport import *
+from modules.missgaps import *
 from os.path import exists
 
 # Function process_position()
@@ -160,54 +161,6 @@ def process_position(position, multiconfig, species_in_alignment):
     return z
 
 
-# FUNCTION filter_for_gaps()
-# filters a trait for its gaps
-
-def filter_for_gaps(max_bg, max_fg, max_all, gfg, gbg):
-
-    out = True
-
-    all_g = gfg + gbg
-
-    print("in filter_for_gaps:", max_bg, max_fg, max_all)
-    print(all_g)
-
-    
-    
-    if max_all != "nofilter" and all_g > int(max_all):
-        out = False
-
-    elif max_fg != "nofilter" and gfg > int(max_fg):
-        out = False
-
-    elif max_bg != "nofilter" and gbg > int(max_bg):
-        out = False
-
-    return out
-
-
-# FUNCTION filter_for_missing()
-# filters a trait for its gaps
-
-def filter_for_missings(max_m_bg, max_m_fg, max_m_all, mfg, mbg):
-
-    out = True
-
-    all_m = mfg + mbg
-    
-    if max_m_all != "nofilter" and all_m > int(max_m_all):
-        out = False
-
-    elif max_m_fg != "nofilter" and mfg > int(max_m_fg):
-        out = False
-
-    elif max_m_bg != "nofilter" and mbg > int(max_m_bg):
-        out = False
-
-    return out
-
-
-
 # FUNCTION check_scenario()
 # checks the scenario
 
@@ -258,14 +211,12 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
     # Filter for the number of gaps
 
     for trait in valid_traits:
-        print("in fetch_caas:", maxgaps_bg, maxgaps_fg, maxgaps_all)
 
-        
-        if filter_for_gaps(max_bg = maxgaps_bg, max_fg = maxgaps_fg, max_all = maxgaps_all, gfg = processed_position.trait2gaps_fg[trait], gbg = processed_position.trait2gaps_bg[trait]) == False:
+        if missgaps(max_bg = maxgaps_bg, max_fg = maxgaps_fg, max_all = maxgaps_all, nfg = processed_position.trait2gaps_fg[trait], nbg = processed_position.trait2gaps_bg[trait]) == False:
             valid_traits.remove(trait)
 
         
-        elif filter_for_missings(max_m_bg = maxmiss_bg, max_m_fg = maxmiss_fg, max_m_all = maxmiss_all, mfg = processed_position.trait2miss_fg[trait], mbg = processed_position.trait2miss_bg[trait]) == False:
+        if missgaps(max_bg = maxmiss_bg, max_fg = maxmiss_fg, max_all = maxmiss_all, nfg = processed_position.trait2miss_fg[trait], nbg = processed_position.trait2miss_bg[trait]) == False:
             valid_traits.remove(trait)
 
 

@@ -1,2 +1,6 @@
 Gene	Trait	Position	Substitution	Pvalue	Scenario	FFGN	FBGN	GFG	GBG	MFG	MBG	FFG	FBG	MS
 faketrait	BodyMass_kg_permulation.cfg	0	T/V	pvalue_missing	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+faketrait	BodyMass_kg_permulation.cfg	1	T/V	pvalue_missing	scenario1	4	2	0	1	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Avahi_peyrierasi,Callibella_humilis	-
+faketrait	BodyMass_kg_permulation.cfg	4	D/B	pvalue_missing	scenario1	2	3	2	0	0	0	Gorilla_beringei,Gorilla_gorilla	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+faketrait	BodyMass_kg_permulation.cfg	5	F/D	pvalue_missing	scenario1	4	1	0	2	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra	-
+faketrait	BodyMass_kg_permulation.cfg	6	F/D	pvalue_missing	scenario1	2	3	2	0	0	0	Gorilla_beringei,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-

@@ -127,12 +127,12 @@ if tool.lower() == "discovery":
     # Max background gaps
     parser.add_option("--max_bg_gaps", dest="max_bg_gaps_string",
                     help="Filter by number of gaps in the background\
-                        e.g. --max_bg_gaps 3 will accept positions with less than 3 gaps in bg. Default = nofilter (all gaps accepted).", default = "0")
+                        e.g. --max_bg_gaps 3 will accept positions with less than 3 gaps in bg. Default = nofilter (all gaps accepted).", default = "nofilter")
 
     # Max foreground gaps
     parser.add_option("--max_fg_gaps", dest="max_fg_gaps_string",
                     help="Filter by number of gaps in the foreground.\
-                        e.g. --max_bg_gaps 3 will accept positions with less than 3 gaps in fg. Default = nofilter (all gaps accepted).", default = "0")
+                        e.g. --max_bg_gaps 3 will accept positions with less than 3 gaps in fg. Default = nofilter (all gaps accepted).", default = "nofilter")
 
     # Max overall gaps (fg + bg)
     parser.add_option("--max_gaps", dest="max_gaps_string",
@@ -148,12 +148,12 @@ if tool.lower() == "discovery":
     # Max background missing species
     parser.add_option("--max_bg_miss", dest="max_bg_miss_string",
                     help="Filter by number of miss in the background\
-                        e.g. --max_bg_miss 3 will accept positions with less than 3 miss in bg. Default = nofilter (all miss accepted).", default = "0")
+                        e.g. --max_bg_miss 3 will accept positions with less than 3 miss in bg. Default = nofilter (all miss accepted).", default = "nofilter")
 
     ###     1.4.4 Max foreground missing species
     parser.add_option("--max_fg_miss", dest="max_fg_miss_string",
                     help="Filter by number of miss in the foreground.\
-                        e.g. --max_bg_miss 3 will accept positions with less than 3 miss in fg. Default = nofilter (all miss accepted).", default = "0")
+                        e.g. --max_bg_miss 3 will accept positions with less than 3 miss in fg. Default = nofilter (all miss accepted).", default = "nofilter")
 
     # Max overall missing species (fg + bg)
     parser.add_option("--max_miss", dest="max_miss_string",
@@ -205,19 +205,13 @@ if tool.lower() == "discovery":
 
     pval_dictionary = {}
 
-    if options.max_gaps_string == "nofilter":
-
-        updated_max_gaps = (options.max_fg_gaps_string) + int(options.max_bg_gaps_string)
-    
-    else:
-        updated_max_gaps = int(options.max_gaps_string)
 
     discovery( 
                 input_cfg = options.config_file,
                 sliced_object = sliced_alignment,
                 max_fg_gaps = options.max_fg_gaps_string,
                 max_bg_gaps = options.max_bg_gaps_string,
-                max_overall_gaps = updated_max_gaps,
+                max_overall_gaps = options.max_gaps_string,
 
                 max_fg_miss = options.max_fg_miss_string,
                 max_bg_miss = options.max_bg_miss_string,
