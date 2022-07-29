@@ -90,7 +90,7 @@ def filter_position(imported_position, changes_threshold, max_gaps_ratio):
         
         counts.remove(max(counts))        
         seconds = sum(counts)
-        
+    
     if seconds < changes_threshold:
         outflag = False
 
@@ -100,7 +100,7 @@ def filter_position(imported_position, changes_threshold, max_gaps_ratio):
 # FUNCTION slice()
 # Generates a key file per each gene
  
-def slice(alignment_file, alignment_format = "phylip-relaxed", column_threshold = 3, max_gaps = 0.5):
+def slice(alignment_file, alignment_format, column_threshold, max_gaps = 0.5):
 
     class slice_object():
         def __init__(self):
@@ -125,5 +125,4 @@ def slice(alignment_file, alignment_format = "phylip-relaxed", column_threshold 
 
     # FILTERING POSITIONS
     z.d = list(filter(functools.partial(filter_position, changes_threshold = column_threshold, max_gaps_ratio = max_gaps), imported_positions))
-
     return z

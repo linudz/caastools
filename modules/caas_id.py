@@ -153,7 +153,7 @@ def process_position(position, multiconfig, species_in_alignment):
         z.trait2miss_all[trait] = mall
 
         try:
-            z.trait2missings[trait] = ",".join(miss_fg + miss_bg)
+            z.trait2missings[trait] = (miss_fg + miss_bg)
         except:
             z.trait2missings[trait] = "none"
 
@@ -168,6 +168,11 @@ def filter_for_gaps(max_bg, max_fg, max_all, gfg, gbg):
     out = True
 
     all_g = gfg + gbg
+
+    print("in filter_for_gaps:", max_bg, max_fg, max_all)
+    print(all_g)
+
+    
     
     if max_all != "nofilter" and all_g > int(max_all):
         out = False
@@ -253,9 +258,12 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
     # Filter for the number of gaps
 
     for trait in valid_traits:
+        print("in fetch_caas:", maxgaps_bg, maxgaps_fg, maxgaps_all)
+
         
         if filter_for_gaps(max_bg = maxgaps_bg, max_fg = maxgaps_fg, max_all = maxgaps_all, gfg = processed_position.trait2gaps_fg[trait], gbg = processed_position.trait2gaps_bg[trait]) == False:
             valid_traits.remove(trait)
+
         
         elif filter_for_missings(max_m_bg = maxmiss_bg, max_m_fg = maxmiss_fg, max_m_all = maxmiss_all, mfg = processed_position.trait2miss_fg[trait], mbg = processed_position.trait2miss_bg[trait]) == False:
             valid_traits.remove(trait)
@@ -325,8 +333,13 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
             fg_ungapped.sort()
             bg_ungapped.sort()
 
-            #pvalue_string = pvdict[genename + "@" + processed_position.position]
+            missings = "-"
 
+            if len(processed_position.trait2missings[traitname]) > 0:
+                missings = ",".join(processed_position.trait2missings[traitname])
+
+
+            #pvalue_string = pvdict[genename + "@" + processed_position.position]
             print(  "\t".join(
                 [genename,
                     traitname,
@@ -342,7 +355,7 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
                     str(processed_position.trait2miss_bg[traitname]),
                     ",".join(fg_ungapped),
                     ",".join(bg_ungapped),
-                    processed_position.trait2missings[traitname]]
+                    missings]
             ), file = out)
 
         out.close()

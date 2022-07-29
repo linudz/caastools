@@ -28,6 +28,7 @@ from modules.caas_id import *
 from modules.alimport import *
 from modules.pindex import *
 import os
+from os.path import exists
 
 ### FUNCTION discovery()
 ### Scans one single alignment to identify the CAAS
@@ -45,10 +46,12 @@ def discovery(input_cfg, sliced_object, max_fg_gaps, max_bg_gaps, max_overall_ga
 
     # Step 5: Overwrite the output file
 
-    os.system("rm -r " + output_file)
+    if exists(output_file):
+        os.system("rm -r " + output_file)
 
     # Step 5: extract the raw caas
     for position in processed_positions:
+        print("in ct script:", max_bg_gaps, max_fg_gaps, max_overall_gaps)
         fetch_caas( p.genename,
                     position,
                     trait_object.alltraits,

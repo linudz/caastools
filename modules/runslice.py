@@ -70,8 +70,7 @@ def runslice(options_object):
     fg_threshold = fg_species - sum_nulls_fg
     bg_threshold = bg_species - sum_nulls_bg
 
-
-    c_threshold = max(fg_threshold, bg_threshold)
+    c_threshold = min(fg_threshold, bg_threshold)
 
 
     # Alignment slice: 2- Filter positions (slice alignment)
