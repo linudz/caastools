@@ -139,7 +139,7 @@ def calcpval_random(line_dictionary, genename, fg_size, bg_size):
     z.combine()
     z.dostat()
 
-    return z.out_tuple
+    return z.pvalue
 
 ### FUNCTION genepval() - iterates the pvalue calculation over a whole gene
 

@@ -56,6 +56,7 @@ bootstrap       Runs CAAS bootstrap analysis on a on a single MSA.
 import sys                                          # for tool selection and more
 from optparse import OptionParser                   # for single option parser
 from modules.deps import check_dependencies         # 
+from os.path import exists
 
 #### PROGRAM CHECK ####################################################################################################
 ########################################################################################################################
@@ -203,7 +204,10 @@ if tool.lower() == "discovery":
 
     ### 1.10 PROCEDURE Step 2- Run the discovery
 
-    pval_dictionary = {}
+    print("\n\nCAAStools 0.8 beta")
+    print("Convergent Amino Acid Substitution identification and analysis toolbox\n")
+
+    print("[DISCOVERY TOOL] - Scanning", options.single_alignment, "with phenotype information from", options.config_file + "\n\n")
 
 
     discovery( 
@@ -220,7 +224,10 @@ if tool.lower() == "discovery":
                 admitted_scenarios = options.scenarios_string,
                 output_file = options.output_file)
 
-
+    if exists(options.output_file):
+        print("\n\nDone. Results are available in", options.output_file + "\n")
+    else:
+        print("\n\nWarning: No CAAS Found, CAAStools generated no output file.\n")
 
 #### TOOL 2. SIMULATE ######################################################################################################
 ########################################################################################################################
