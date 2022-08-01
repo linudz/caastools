@@ -20,7 +20,7 @@ Contributors:   Alejandro Valenzuela (alejandro.valenzuela@upf.edu)
 
 MODULE NAME:    ct
 DESCRIPTION:    Launcher script. Calls the different tools.
-DEPENDENCIES:   TBD
+DEPENDENCIES:   Directly or indirectly, all the modules are connected to this script
 '''
 
 ### Introduction

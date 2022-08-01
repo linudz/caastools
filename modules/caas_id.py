@@ -37,6 +37,7 @@ fetch_caas()                fetches caas per each thing
 from modules.pindex import *
 from modules.alimport import *
 from modules.missgaps import *
+from modules.hyper import *
 from os.path import exists
 
 # Function process_position()
@@ -69,8 +70,11 @@ def process_position(position, multiconfig, species_in_alignment):
 
             self.gapped = []
             self.missing = []
+
+            self.d = {}
         
     z = processed_position()
+    z.d = position
 
     # Load missing species
 
@@ -288,6 +292,16 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
 
             if len(processed_position.trait2missings[traitname]) > 0:
                 missings = ",".join(processed_position.trait2missings[traitname])
+            
+            # Starting the pvalue determination
+
+
+            pv = calcpval_random(processed_position.d, genename, int(fg_species_number), int(bg_species_number))
+            pvalue_string = str(pv[1])
+
+            print("CAAS found in alignment", genename, "on position", processed_position.position, "with pvalue", pvalue_string)
+
+            # End of the pvalue determination
 
 
             #pvalue_string = pvdict[genename + "@" + processed_position.position]
@@ -296,7 +310,7 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
                     traitname,
                     processed_position.position,
                     change,
-                    "pvalue_missing",
+                    pvalue_string,
                     thescenario,
                     fg_species_number,
                     bg_species_number,
