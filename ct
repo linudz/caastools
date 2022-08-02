@@ -32,7 +32,7 @@ DEPENDENCIES:   Directly or indirectly, all the modules are connected to this sc
 
 application_info = '''
 CAASTOOLS version 0.9 (beta)
-Convergent Amino Acid Substitution detection and analysis toolbox
+Convergent Amino Acid Substitution detection and analysis TOOLbox
 '''
 
 genhelp = '''
@@ -78,6 +78,7 @@ if tool.lower() == "help":                                              # The us
 if tool.lower() not in ("discovery", "simulate", "bootstrap"):          # Check: the user mistyped the name of a tool
     print(application_info)
     print(genhelp)                                                      # Print toolbox-wide help
+    print("\n\n****ERROR: no tool named", tool + "\n\n")
     exit()
 
 
@@ -89,7 +90,7 @@ if tool.lower() not in ("discovery", "simulate", "bootstrap"):          # Check:
 if tool.lower() == "discovery":
 
     ### 1.1 Check the dependencies
-    check_dependencies("discovery", ["biopython"])
+    check_dependencies("discovery", ["biopython", "scipy", "numpy"])
 
     ### 1.2 Init the input parser
     parser = OptionParser()
@@ -184,7 +185,7 @@ if tool.lower() == "discovery":
         missing_option_messages.append("Output not specified")
     
     if len(missing_option_messages) > 0:
-        print("\n\n****ERROR: mandatory input missing:")
+        print("\n\n****ERROR: mandatory i/o information missing:")
         print("\n".join(missing_option_messages))
         print("")
         print(parser.usage)
@@ -204,8 +205,8 @@ if tool.lower() == "discovery":
 
     ### 1.10 PROCEDURE Step 2- Run the discovery
 
-    print("\n\nCAAStools 0.8 beta")
-    print("Convergent Amino Acid Substitution identification and analysis toolbox\n")
+    print(application_info)
+    print("")
 
     print("[DISCOVERY TOOL] - Scanning", options.single_alignment, "with phenotype information from", options.config_file + "\n\n")
 
@@ -232,5 +233,41 @@ if tool.lower() == "discovery":
 #### TOOL 2. SIMULATE ######################################################################################################
 ########################################################################################################################
 
+if tool.lower() == "simulate":
+
+    ### 2.1 Check the dependencies
+    check_dependencies("discovery", ["biopython", "scipy", "numpy"])
+
+    ### 2.2 Init the input parser
+    parser = OptionParser()
+
+    ### 1.3 The mandatory inputs
+
+    ###     1.3.1 Input alignment
+    parser.add_option("-t", "--", dest="single_alignment",
+                    help="Multiple Sequence Alignment (MSA) file.", default = "none")
+    ###     1.3.2 Alignment format
+    parser.add_option("--fmt", dest="ali_format",
+                    help="File format of the MSA file. Default: clustal. Accepted: clustal, emboss, fasta, \
+                    fasta-m10, ig, maf, mauve, msf, nexus, phylip, phylip-sequential, phylip-relaxed, stockholm.", default = "clustal")
+    ###     1.3.3 Config file
+    parser.add_option("-t", "--traitfile", dest="config_file",
+                    help="The config file (read documentation for file formatting)", default = "none")
+    
+    ###     1.3.4 Output file (the table)
+    parser.add_option("-o", "--output", dest="output_file",
+                    help="The output file, where the CAAS discovery table will be printed", default = "none")
+
+
 #### TOOL 3. BOOTSTRAP ######################################################################################################
 ########################################################################################################################
+
+if tool.lower() == "bootstrap":
+
+    ### 2.1 Check the dependencies
+    check_dependencies("discovery", ["biopython", "scipy", "numpy"])
+
+    ### 2.2 Init the input parser
+    parser = OptionParser()
+    print("This tool is under construction")
+
