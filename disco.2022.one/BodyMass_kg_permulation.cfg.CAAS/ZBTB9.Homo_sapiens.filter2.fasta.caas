@@ -1,5 +1,0 @@
-Gene	Trait	Position	Substitution	Pvalue	Scenario	FFGN	FBGN	GFG	GBG	MFG	MBG	FFG	FBG	MS
-ZBTB9	BodyMass_kg_permulation.cfg	11	A/PT	0.027335301016034787	scenario2	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZBTB9	BodyMass_kg_permulation.cfg	14	T/I	0.01586568208005117	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZBTB9	BodyMass_kg_permulation.cfg	153	N/T	0.03061957540873592	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZBTB9	BodyMass_kg_permulation.cfg	292	S/G	0.01970722083208854	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
