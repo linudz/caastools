@@ -214,115 +214,113 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
 
     # Filter for the number of gaps
 
-    for trait in valid_traits:
+    if len(valid_traits) > 0:
 
-        if missgaps(max_bg = maxgaps_bg, max_fg = maxgaps_fg, max_all = maxgaps_all, nfg = processed_position.trait2gaps_fg[trait], nbg = processed_position.trait2gaps_bg[trait]) == False:
-            valid_traits.remove(trait)
+        for trait in valid_traits:
 
+            if missgaps(max_bg = maxgaps_bg, max_fg = maxgaps_fg, max_all = maxgaps_all, nfg = processed_position.trait2gaps_fg[trait], nbg = processed_position.trait2gaps_bg[trait]) == False or missgaps(max_bg = maxmiss_bg, max_fg = maxmiss_fg, max_all = maxmiss_all, nfg = processed_position.trait2miss_fg[trait], nbg = processed_position.trait2miss_bg[trait]) == False:
+                valid_traits.remove(trait)
+
+
+        output_traits = []
+
+        # Filter for scenario
+        for x in valid_traits:
+            aa_tag_fg_list = processed_position.trait2aas_fg[x]
+            aa_tag_fg_list.sort()
+            aa_tag_fg = "".join(aa_tag_fg_list)
+
+            aa_tag_bg_list = processed_position.trait2aas_bg[x]
+            aa_tag_bg_list.sort()
+            aa_tag_bg = "".join(aa_tag_bg_list)
+
+            tag = "/".join([aa_tag_fg, aa_tag_bg])
+
+            check = iscaas(tag)
+
+            if check.caas == True and check.scenario in admitted_scenarios:
+                output_traits.append(x + "@" + tag + "@scenario" + check.scenario)
         
-        if missgaps(max_bg = maxmiss_bg, max_fg = maxmiss_fg, max_all = maxmiss_all, nfg = processed_position.trait2miss_fg[trait], nbg = processed_position.trait2miss_bg[trait]) == False:
-            valid_traits.remove(trait)
+
+        # Print the output
+
+        header = "\t".join([
+            "Gene",
+            "Trait",
+            "Position",
+            "Substitution",
+            "Pvalue",
+            "Scenario",
+            "FFGN",
+            "FBGN",
+            "GFG",
+            "GBG",
+            "MFG",
+            "MBG",
+            "FFG",
+            "FBG",
+            "MS"
+
+        ])
+
+        if len(output_traits) > 0:
+
+            if exists(output_file):
+                out = open(output_file, "a")
+            else:
+                out = open(output_file, "w")
+                print(header, file=out)
+
+            for trait in output_traits:
+
+                traitname = trait.split("@")[0]            
+                change = trait.split("@")[1]
+                thescenario = trait.split("@")[2]
+
+                fg_species_number = str(len(processed_position.trait2ungapped_fg[traitname]))
+                bg_species_number = str(len(processed_position.trait2ungapped_bg[traitname]))
+
+                fg_ungapped = processed_position.trait2ungapped_fg[traitname]
+                bg_ungapped = processed_position.trait2ungapped_bg[traitname]
+
+                fg_ungapped.sort()
+                bg_ungapped.sort()
+
+                missings = "-"
+
+                if len(processed_position.trait2missings[traitname]) > 0:
+                    missings = ",".join(processed_position.trait2missings[traitname])
+                
+                # Starting the pvalue determination
 
 
-    output_traits = []
+                pv = calcpval_random(processed_position.d, genename, int(fg_species_number), int(bg_species_number))
+                pvalue_string = str(pv)
 
-    # Filter for scenario
-    for x in valid_traits:
-        aa_tag_fg_list = processed_position.trait2aas_fg[x]
-        aa_tag_fg_list.sort()
-        aa_tag_fg = "".join(aa_tag_fg_list)
 
-        aa_tag_bg_list = processed_position.trait2aas_bg[x]
-        aa_tag_bg_list.sort()
-        aa_tag_bg = "".join(aa_tag_bg_list)
+                print("CAAS found in alignment", genename, "on position", processed_position.position, "with pvalue", pvalue_string)
 
-        tag = "/".join([aa_tag_fg, aa_tag_bg])
+                # End of the pvalue determination
 
-        check = iscaas(tag)
 
-        if check.caas == True and check.scenario in admitted_scenarios:
-            output_traits.append(x + "@" + tag + "@scenario" + check.scenario)
-    
-
-    # Print the output
-
-    header = "\t".join([
-        "Gene",
-        "Trait",
-        "Position",
-        "Substitution",
-        "Pvalue",
-        "Scenario",
-        "FFGN",
-        "FBGN",
-        "GFG",
-        "GBG",
-        "MFG",
-        "MBG",
-        "FFG",
-        "FBG",
-        "MS"
-
-    ])
-
-    if len(output_traits) > 0:
-
-        if exists(output_file):
-            out = open(output_file, "a")
-        else:
-            out = open(output_file, "w")
-            print(header, file=out)
-
-        for trait in output_traits:
-
-            traitname = trait.split("@")[0]            
-            change = trait.split("@")[1]
-            thescenario = trait.split("@")[2]
-
-            fg_species_number = str(len(processed_position.trait2ungapped_fg[traitname]))
-            bg_species_number = str(len(processed_position.trait2ungapped_bg[traitname]))
-
-            fg_ungapped = processed_position.trait2ungapped_fg[traitname]
-            bg_ungapped = processed_position.trait2ungapped_bg[traitname]
-
-            fg_ungapped.sort()
-            bg_ungapped.sort()
-
-            missings = "-"
-
-            if len(processed_position.trait2missings[traitname]) > 0:
-                missings = ",".join(processed_position.trait2missings[traitname])
+                #pvalue_string = pvdict[genename + "@" + processed_position.position]
+                print(  "\t".join(
+                    [genename,
+                        traitname,
+                        processed_position.position,
+                        change,
+                        pvalue_string,
+                        thescenario,
+                        fg_species_number,
+                        bg_species_number,
+                        str(processed_position.trait2gaps_fg[traitname]),
+                        str(processed_position.trait2gaps_bg[traitname]),
+                        str(processed_position.trait2miss_fg[traitname]),
+                        str(processed_position.trait2miss_bg[traitname]),
+                        ",".join(fg_ungapped),
+                        ",".join(bg_ungapped),
+                        missings]
+                ), file = out)
             
-            # Starting the pvalue determination
 
-
-            pv = calcpval_random(processed_position.d, genename, int(fg_species_number), int(bg_species_number))
-            pvalue_string = str(pv)
-
-
-            print("CAAS found in alignment", genename, "on position", processed_position.position, "with pvalue", pvalue_string)
-
-            # End of the pvalue determination
-
-
-            #pvalue_string = pvdict[genename + "@" + processed_position.position]
-            print(  "\t".join(
-                [genename,
-                    traitname,
-                    processed_position.position,
-                    change,
-                    pvalue_string,
-                    thescenario,
-                    fg_species_number,
-                    bg_species_number,
-                    str(processed_position.trait2gaps_fg[traitname]),
-                    str(processed_position.trait2gaps_bg[traitname]),
-                    str(processed_position.trait2miss_fg[traitname]),
-                    str(processed_position.trait2miss_bg[traitname]),
-                    ",".join(fg_ungapped),
-                    ",".join(bg_ungapped),
-                    missings]
-            ), file = out)
-        
-
-        out.close()
+            out.close()
