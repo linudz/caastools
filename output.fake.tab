@@ -1,13 +1,5 @@
 Gene	Trait	Position	Substitution	Pvalue	Scenario	FFGN	FBGN	GFG	GBG	MFG	MBG	FFG	FBG	MS
-ZACN	BodyMass_kg_permulation.cfg	5	P/L	0.02108744595720342	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	14	F/L	0.016207055208749606	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	24	Q/ER	0.028829859000598722	scenario2	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	29	T/P	0.023699843428306347	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	39	V/FL	0.028983544272843238	scenario2	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	63	Q/EK	0.020952121845545634	scenario2	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	79	M/V	0.019391433248488958	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	98	T/AN	0.01504506856682816	scenario2	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	103	R/Q	0.021044716933460404	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	166	H/Q	0.01766918308639927	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	261	G/A	0.031320524183058404	scenario1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
-ZACN	BodyMass_kg_permulation.cfg	332	Q/HR	0.019259443586209846	scenario2	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+faketrait	BodyMass_kg_permulation.cfg	0	T/V	0.3314285714285714	scenario1	4	2	0	0	0	1	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Avahi_peyrierasi,Callibella_humilis	Aotus_griseimembrak
+faketrait	BodyMass_kg_permulation.cfg	1	T/V	0.4444444444444445	scenario1	4	2	0	0	0	1	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Avahi_peyrierasi,Callibella_humilis	Aotus_griseimembrak
+faketrait	BodyMass_kg_permulation.cfg	4	D/B	0.4	scenario1	2	2	2	0	0	1	Gorilla_beringei,Gorilla_gorilla	Avahi_peyrierasi,Callibella_humilis	Aotus_griseimembrak
+faketrait	BodyMass_kg_permulation.cfg	6	F/D	0.4711111111111111	scenario1	2	2	2	0	0	1	Gorilla_beringei,Mandrillus_leucophaeus	Avahi_peyrierasi,Callibella_humilis	Aotus_griseimembrak

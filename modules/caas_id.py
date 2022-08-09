@@ -299,6 +299,7 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
             pv = calcpval_random(processed_position.d, genename, int(fg_species_number), int(bg_species_number))
             pvalue_string = str(pv)
 
+
             print("CAAS found in alignment", genename, "on position", processed_position.position, "with pvalue", pvalue_string)
 
             # End of the pvalue determination
@@ -322,5 +323,6 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
                     ",".join(bg_ungapped),
                     missings]
             ), file = out)
+        
 
         out.close()
