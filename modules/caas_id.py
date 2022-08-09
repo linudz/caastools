@@ -36,7 +36,6 @@ fetch_caas()                fetches caas per each thing
 
 from modules.pindex import *
 from modules.alimport import *
-from modules.missgaps import *
 from modules.hyper import *
 from os.path import exists
 
@@ -212,15 +211,61 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
 
     valid_traits = list(a.intersection(b).intersection(c))
 
-    # Filter for the number of gaps
+    # Filter for the number of gaps and missing species
 
     if len(valid_traits) > 0:
 
         for trait in valid_traits:
 
-            if missgaps(max_bg = maxgaps_bg, max_fg = maxgaps_fg, max_all = maxgaps_all, nfg = processed_position.trait2gaps_fg[trait], nbg = processed_position.trait2gaps_bg[trait]) == False or missgaps(max_bg = maxmiss_bg, max_fg = maxmiss_fg, max_all = maxmiss_all, nfg = processed_position.trait2miss_fg[trait], nbg = processed_position.trait2miss_bg[trait]) == False:
-                valid_traits.remove(trait)
+            ### GAPS filtering.
 
+            if maxgaps_fg != "NO" and processed_position.trait2gaps_fg[trait] > int(maxgaps_fg):
+                if len(valid_traits) > 0:
+                    valid_traits.remove(trait)
+
+            if maxgaps_bg != "NO" and processed_position.trait2gaps_bg[trait] > int(maxgaps_fg):
+                if len(valid_traits) > 0:
+                    valid_traits.remove(trait)
+
+            if maxgaps_all != "NO" and processed_position.trait2gaps_fg[trait] + processed_position.trait2gaps_bg[trait] > int(maxgaps_all):
+                if len(valid_traits) > 0:
+                    valid_traits.remove(trait)
+
+
+            ### Missing filtering.
+
+            if maxmiss_fg != "NO" and processed_position.trait2miss_fg[trait] > int(maxmiss_fg):
+                if len(valid_traits) > 0:
+                    valid_traits.remove(trait)
+
+            if maxmiss_bg != "NO" and processed_position.trait2miss_bg[trait] > int(maxmiss_fg):
+                if len(valid_traits) > 0:
+                    valid_traits.remove(trait)
+
+            if maxmiss_all != "NO" and processed_position.trait2miss_fg[trait] + processed_position.trait2miss_bg[trait] > int(maxmiss_all):
+                if len(valid_traits) > 0:
+                    valid_traits.remove(trait)
+
+
+            '''
+            gaps_condition = missgaps(
+                max_bg = maxgaps_bg,
+                max_fg = maxgaps_fg,
+                max_all = maxgaps_all,
+                nfg = processed_position.trait2gaps_fg[trait],
+                nbg = processed_position.trait2gaps_bg[trait])
+            
+            missings_condition = missgaps(
+                max_bg = maxmiss_bg,
+                max_fg = maxmiss_fg,
+                max_all = maxmiss_all,
+                nfg = processed_position.trait2miss_fg[trait],
+                nbg = processed_position.trait2miss_bg[trait])
+       
+            
+            if gaps_condition == False or missings_condition == False:
+                valid_traits.remove(trait)
+            '''
 
         output_traits = []
 

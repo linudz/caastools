@@ -5,7 +5,7 @@ import sys
 import glob
 
 command = "ct discovery -a $alignment_file -t $trait_file -o $output_file --fmt $alignment_format"
-further_options = "--max_fg_gaps 0 --max_bg_gaps 0 --max_fg_miss 0 --max_fg_miss 0"
+filtering_options = "--max_fg_gaps 0 --max_bg_gaps 0 --max_bg_miss 0 --max_fg_miss 0"
 
 # Import the settings from arguments
 
@@ -15,7 +15,8 @@ alignment_format = "phylip-relaxed"
 
 # Process the variables
 
-results_folder = "disco.2022"
+results_folder = "test/all_zgenes"
+
 caas_folder = results_folder + "/" + trait_file.split("/")[-1] + ".CAAS"
 
 # Create the output folder
@@ -29,20 +30,29 @@ try:
     os.mkdir(caas_folder)
 except:
     os.system("rm -r " +  caas_folder)
+
     os.mkdir(caas_folder)
 
-# Replace the fixed part of the command
+# Replace the fixed part of the command - one
 
 command = command.replace("$trait_file", trait_file)
 command = command.replace("$alignment_format", alignment_format)
 
 
-# Loop over folder content
+# Loop over folder content for third condition
+
+counter = 1
+total = len(glob.glob(alignment_folder + "/*"))
 
 for x in glob.glob(alignment_folder + "/*"):
-    thefile = x.split("/")[-1]
-    theoutput = caas_folder + "/" + thefile + ".caas"
-    command = command.replace("$alignment_file", x)
-    command = command.replace("$output_file", theoutput)
 
-    print(command + " " + further_options)
+    thefile = x.split("/")[-1]
+
+    print("Processing file", thefile, counter, "of", total)
+    counter = counter + 1
+
+    theoutput = caas_folder + "/" + thefile + ".caas"
+    loop_command = command.replace("$alignment_file", x)
+    loop_command = loop_command.replace("$output_file", theoutput)
+
+    os.system("python " + loop_command + " " + filtering_options)
