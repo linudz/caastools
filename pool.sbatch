@@ -2,7 +2,6 @@
 #SBATCH -J ctloop_array # A single job name for the array 
 #SBATCH -n 1 # Number of cores 
 #SBATCH -N 1 # All cores on one machine
-#SBATCH -p fast # Partition 
 #SBATCH --mem 4000 # Memory request (4Gb) 
 #SBATCH -t 0-2:00 # Maximum execution time (D-HH:MM) 
 #SBATCH -o ctloop_array_%A_%a.out # Standard output 
