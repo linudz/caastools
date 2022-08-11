@@ -36,7 +36,7 @@ except:
 
 # Process the variables
 
-results_folder = "../augustloop/results"                                      
+results_folder = "../augustloop/results"                                      ##
 
 caas_folder = results_folder + "/" + trait_file.split("/")[-1] + ".CAAS"
 
