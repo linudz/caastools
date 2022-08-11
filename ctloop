@@ -11,7 +11,7 @@ filtering_options = "--max_fg_gaps 0 --max_bg_gaps 0 --max_bg_miss 0 --max_fg_mi
 
 traits_folder = "../augustloop/final_configs"                               ##
 active_traits = "../augustloop/configs.to.scan.list"                        ##
-alignment_folder = "../augustloop/trait.alignments"                         ##
+alignment_folder = "../augustloop/alignments"                         ##
 alignment_format = "phylip-relaxed"
 
 # Index the active traits
