@@ -9,9 +9,9 @@ filtering_options = "--max_fg_gaps 0 --max_bg_gaps 0 --max_bg_miss 0 --max_fg_mi
 
 # Import the settings from arguments
 
-traits_folder = "../augustloop/final_configs"                               ##
-active_traits = "../augustloop/configs.to.scan.list"                        ##
-alignment_folder = "../augustloop/alignments"                         ##
+traits_folder = "../augustloop/final_configs"                               
+active_traits = "../augustloop/configs.to.scan.list"                        
+alignment_folder = "../augustloop/alignments"                         
 alignment_format = "phylip-relaxed"
 
 # Index the active traits
@@ -36,7 +36,7 @@ except:
 
 # Process the variables
 
-results_folder = "../augustloop/results"                                      ##
+results_folder = "../augustloop/results"                                      
 
 caas_folder = results_folder + "/" + trait_file.split("/")[-1] + ".CAAS"
 
