@@ -9,13 +9,34 @@ filtering_options = "--max_fg_gaps 0 --max_bg_gaps 0 --max_bg_miss 0 --max_fg_mi
 
 # Import the settings from arguments
 
-trait_file = sys.argv[1]
-alignment_folder = sys.argv[2]
+traits_folder = "../augustloop/final_configs"                               ##
+active_traits = "../augustloop/configs.to.scan.list"                        ##
+alignment_folder = "../augustloop/trait.alignments"                         ##
 alignment_format = "phylip-relaxed"
+
+# Index the active traits
+
+with open(active_traits, "r") as at_handle:
+    at = at_handle.read().splitlines()
+
+trait_index = {}
+
+n = 0
+
+for line in at:
+    n += 1
+    tag = str(n)
+    path = traits_folder + "/" + line
+    trait_index[tag] = path
+
+try:
+    trait_file = trait_index[sys.argv[1]]
+except:
+    print("Trait number not found")
 
 # Process the variables
 
-results_folder = "test/all_zgenes"
+results_folder = "../augustloop/results"                                      ##
 
 caas_folder = results_folder + "/" + trait_file.split("/")[-1] + ".CAAS"
 
