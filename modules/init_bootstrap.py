@@ -19,8 +19,8 @@ Contributors:   Alejandro Valenzuela (alejandro.valenzuela@upf.edu)
 
 MODULE NAME: INIT BOOTSTRAP
 DESCRIPTION: Initialises the bootstrap through different strategy (random, phylogeny and permulations)
-DEPENDENCIES: modules in modules/simulation folder
-CALLED BY: boot.py
+DEPENDENCIES: none
+CALLED BY: ct
 '''
 
 
@@ -104,7 +104,7 @@ def readtree(tree_file, tree_schema = "newick"):
 
 # FUNCTION simtrait() Simulate trait function
 
-def simtrait(fg_len, bg_len, phylogeny_file, mode, cycles, simtraits_outfile, permulation_selection_strategy = "random"):
+def simtrait(fg_len, bg_len, template, tree_file, mode, groupfile, phenotype_values_file, cycles, simtraits_outfile, permulation_selection_strategy = "random"):
     
     # Class multicfg
     class multicfg():
@@ -147,12 +147,13 @@ def simtrait(fg_len, bg_len, phylogeny_file, mode, cycles, simtraits_outfile, pe
 
     # Step 1: import the species 
 
-    t = readtree(phylogeny_file)
+    t = readtree(tree_file)
 
     # WORKFLOW 1: bootstrap in random mode
 
 
     if mode == "random":
+
         
         # Species list.
 
@@ -193,11 +194,39 @@ def simtrait(fg_len, bg_len, phylogeny_file, mode, cycles, simtraits_outfile, pe
                 z.update_dictionary(c[2], s, "0")
 
 
+        z.print_traits(simtraits_outfile)
         return z
     
-    elif mode == "phylogeny-guided":
+    elif mode == "phylogeny-restricted-byfams":
 
-        species = t.species_list
+        # Read from template
+
+        try:
+
+            with open(template) as tcf_handle:
+                tcf = tcf_handle.read().splitlines()
+        
+            fg = []
+            bg = []
+
+            for l in tcf:
+                try:
+                    c = l.split("\t")
+                    if c[1] == "1":
+                        fg.append(c[0])
+                    elif c[1] == "0":
+                        bg.append(c[0])
+                except:
+                    pass
+        except:
+            print("ERROR: couldn't read template file. Input given:", template)
+            exit()
+
+
+        # Extract the groupfile
+
+        with open(groupfile) as gf_handle:
+            species_lines = gf_handle.read().splitlines()
 
         # Extract the species dictionaries
 
@@ -207,15 +236,13 @@ def simtrait(fg_len, bg_len, phylogeny_file, mode, cycles, simtraits_outfile, pe
         for line in species_lines:
             try:
                 c = line.split("\t")
-                if c[0] in species_pool:
-                    # Update s2g
-                    s2g[c[0]] = c[1]
+                s2g[c[0]] = c[1]
 
                     # Update g2s
-                    try:
-                        g2s[c[1]].append(c[0])
-                    except:
-                        g2s[c[1]] = [c[0]]
+                try:
+                    g2s[c[1]].append(c[0])
+                except:
+                    g2s[c[1]] = [c[0]]
             except:
                 pass
         
@@ -271,17 +298,22 @@ def simtrait(fg_len, bg_len, phylogeny_file, mode, cycles, simtraits_outfile, pe
                 z.update_dictionary(c[2], s, "0")
 
 
+        z.print_traits(simtraits_outfile)
         return z
-    
-    elif mode == "permulations":
+
+    elif mode == "phylogeny-restricted-byfams":
+        print("Sorry, this function is not implemented yet")
+        exit()
+
+    elif mode == "bm":
 
         if tree_file == "none":
-            print("ERROR: for permulations mode you must provide a rooted and fully dichotomic tree file in newick format.")
-            print("Exiting.")
+            print("ERROR: for brownian motion simulation you must provide a rooted and fully dichotomic tree file in newick format.")
+            print("See documentation.")
             exit()
         if phenotype_values_file == "none":
-            print("ERROR: for permulations mode you must provide a tsv file with phenotype values (1/0 for binary traits).")
-            print("Exiting.")
+            print("ERROR: for brownian motion simulation you must provide a tsv file with phenotype values (1/0 for binary traits).")
+            print("See documentation.")
             exit()
         
         script_path = os.path.realpath(sys.argv[0]).split("/")
@@ -294,7 +326,7 @@ def simtrait(fg_len, bg_len, phylogeny_file, mode, cycles, simtraits_outfile, pe
             
             "./permulations.r",                     # Rscript
             tree_file,                              # args[1]
-            trait_config_file,                      # args[2]
+            template,                               # args[2]
             str(cycles),                            # args[3]
             permulation_selection_strategy,         # args[4]
             phenotype_values_file,                  # args[5]
