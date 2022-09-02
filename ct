@@ -68,7 +68,7 @@ from os.path import exists
 if len(sys.argv) == 1:                                                  # The user didn't tape anything after "ct"
     print(application_info)
     print(genhelp)                                                      # Print toolbox-wide help
-    print("\n\n****ERROR: please, select a tool\n\n")
+    print("\n\nPlease, select a tool\n\n")
     exit()
 
 tool = sys.argv[1]
