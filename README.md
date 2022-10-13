@@ -1,10 +1,5 @@
 
-# CAAStools 1.0
-
-
-## Software documentation.
-
-
+# CAAStools 1.0 - Software documentation.
 # 1. Introduction to CAAStools
 
 Amino acid substitutions that are consistent with phenotypic variation indicate that the gene product is potentially involved in the genetic determination of the trait. We define these cases as _Convergent Amino Acid Substitutions_ (CAAS).
