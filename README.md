@@ -155,7 +155,7 @@ CAAStools discovery returns those positions in which amino acids differ between 
    </td>
    <td>-
    </td>
-   <td>YES (User specification needed)
+   <td>NO
    </td>
   </tr>
   <tr>
