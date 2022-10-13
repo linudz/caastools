@@ -14,4 +14,4 @@ In recent years, our group worked on optimizing our in-house scripts for CAAS di
 
 CAAStools is a collection of 3 bioinformatics tools written in Python 3.9.4. Figure 1 resumes the functioning of each tool. Globally, CAAStools relies on three main pieces of information that are required in different formats (see the input specification section of those paragraphs discussing each single tool). The discovery tool detects CAAS from a single amino acid MSA (protein or translated nucleotide). The resample tools elaborates virtual phenotype groups through different strategies (brownian motion simulation, random sorting of species or phylogeny-restricted simulation). The result of this tool can be submitted to the bootstrap tool that runs a bootstrap CAAS analysis on a single MSA.
 
-![Figure 1]()
+[Open Figure 1 on FigShare](https://figshare.com/articles/figure/CAAStools_Figure/21324306)
