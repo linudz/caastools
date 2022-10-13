@@ -608,9 +608,6 @@ Each simulation strategy will require a specific set of input files. The followi
   </tr>
 </table>
 
-
-**WARNING. PHYLOGENY-GUIDED NEEDS A FIX. **
-
 The user will need to provide a phylogenetic tree in Newick format ([https://evolution.genetics.washington.edu/phylip/newicktree.html](https://evolution.genetics.washington.edu/phylip/newicktree.html)) to tell the program on which species base its simulation. The binary configuration file is required for the phylogeny restricted and Brownian motion strategies. The phylogeny restricted strategy limits trait randomisation to some specific families.
 
 The resample tool outputs 1000 resampled traits by default. The user can decide the number of cycles through the --cycles option:
