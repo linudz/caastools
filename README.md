@@ -13,7 +13,7 @@ In recent years, our group worked on optimizing our in-house scripts for CAAS di
 
 ## 1.1 Suite overview 
 
-CAAStools is a collection of 3 bioinformatics tools written in Python 3.9.4. **Figure 1** resumes the functioning of each tool. Globally, CAAStools relies on three main pieces of information that are required in different formats (see the input specification section of those paragraphs discussing each single tool). The **_discovery_** tool detects CAAS from a single amino acid MSA (protein or translated nucleotide). The **_resample_** tools elaborates virtual phenotype groups through different strategies (brownian motion simulation, random sorting of species or phylogeny-restricted simulation). The result of this tool can be submitted to the **_bootstrap_** tool that runs a bootstrap CAAS analysis on a single MSA.
+CAAStools is a collection of 3 bioinformatics tools written in Python 3.9.4. **Figure 1** resumes the functioning of each tool. Globally, CAAStools relies on three main pieces of information that are required in different formats (see the input specification section of those paragraphs discussing each single tool). The **_discovery_** tool detects CAAS from a single amino acid MSA (protein or translated nucleotide). The **_resample_** tools elaborates virtual phenotype groups through different strategies (brownian motion simulation, random sorting of species or phylogeny-restricted resampling). The result of this tool can be submitted to the **_bootstrap_** tool that runs a bootstrap CAAS analysis on a single MSA.
 
 [Link to **Figure 1**](https://figshare.com/articles/figure/CAAStools_Figure/21324306)
 
@@ -650,22 +650,22 @@ Here’s an example of the first ten lines of a resampled traits output file.
 ## 4.4 Examples {#4-4-examples}
 
 
-### Ex.1 Simulation based on random selection of species {#ex-1-simulation-based-on-random-selection-of-species}
+### Ex.1 Resampling based on random selection of species {#ex-1-resampling-based-on-random-selection-of-species}
 
 **With input fg/bg size (-f and -b options)**
 
- `ct resample -p examples/phylogeny.nw -f 5 -b 4 -m random --cycles 500 -o test/resample/random.simulation.tab`
+ `ct resample -p examples/phylogeny.nw -f 5 -b 4 -m random --cycles 500 -o test/resample/random.resampling.tab`
 
 **By template (binary config)**
 
-`ct resample -p examples/phylogeny.nw --bytemp examples/config.tab -m random --cycles 500 -o test/resample/random.simulation.bytemplate.tab`
+`ct resample -p examples/phylogeny.nw --bytemp examples/config.tab -m random --cycles 500 -o test/resample/random.resampling.bytemplate.tab`
 
 
-### Ex.2 Simulation based on BM 
+### Ex.2 resampling based on BM 
 
 **Template and trait values mandatory**
 
-`ct resample -p examples/phylogeny.nw --bytemp examples/config.tab -m random --cycles 500  --traitvalues examples/traitvalues.tab -o test/resample/BM.simulation.tab`
+`ct resample -p examples/phylogeny.nw --bytemp examples/config.tab -m random --cycles 500  --traitvalues examples/traitvalues.tab -o test/resample/BM.resampling.tab`
 
 
 
@@ -703,7 +703,7 @@ Column 4: Cycles with positive CAAS
 
 ### Bootstrap from BM resampled traits.
 
-`ct bootstrap -s test/resample/BM.simulation.tab -a examples/MSA/primates.msa.pr -o examples/bm.bootstrap.tab`
+`ct bootstrap -s test/resample/BM.resampling.tab -a examples/MSA/primates.msa.pr -o examples/bm.bootstrap.tab`
 
 5. License
 
