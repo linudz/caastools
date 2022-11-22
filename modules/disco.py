@@ -33,7 +33,7 @@ from os.path import exists
 ### FUNCTION discovery()
 ### Scans one single alignment to identify the CAAS
 
-def discovery(input_cfg, sliced_object, max_fg_gaps, max_bg_gaps, max_overall_gaps, max_fg_miss, max_bg_miss, max_overall_miss, admitted_scenarios, output_file):
+def discovery(input_cfg, sliced_object, max_fg_gaps, max_bg_gaps, max_overall_gaps, max_fg_miss, max_bg_miss, max_overall_miss, admitted_patterns, output_file):
 
     # Step 1: import the trait into a trait object (load_cfg from pindex.py)
     trait_object = load_cfg(input_cfg)
@@ -63,6 +63,6 @@ def discovery(input_cfg, sliced_object, max_fg_gaps, max_bg_gaps, max_overall_ga
                     maxmiss_fg= max_fg_miss,
                     maxmiss_all= max_overall_miss,
 
-                    admitted_scenarios=admitted_scenarios,
+                    admitted_patterns=admitted_patterns,
                     output_file = output_file
                     )

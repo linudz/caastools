@@ -45,7 +45,7 @@ Tools           Description
 discovery       Detects Convergent Amino Acid Substitutions (CAAS) from
                 a single Multiple Sequence Alignment (MSA).
 
-simulate        Simulates virtual phenotypes for CAAS bootstrap analysis.
+resample        Resamples virtual phenotypes for CAAS bootstrap analysis.
 
 bootstrap       Runs CAAS bootstrap analysis on a on a single MSA.
 
@@ -78,7 +78,7 @@ if "help" in tool.lower() or tool.lower == "-h":                                
     print(genhelp)                                                      # Print toolbox-wide help
     exit()
 
-if tool.lower() not in ("discovery", "simulate", "bootstrap"):          # Check: the user mistyped the name of a tool
+if tool.lower() not in ("discovery", "resample", "bootstrap"):          # Check: the user mistyped the name of a tool
     print(application_info)
     print(genhelp)                                                      # Print toolbox-wide help
     print("\n\n****ERROR: no tool named", tool + "\n\n")
@@ -120,12 +120,12 @@ if tool.lower() == "discovery":
 
     ### 1.4 Optional and filtering inputs
 
-    ###     1.4.1 limit output to scenario (default: all scenarios)
+    ###     1.4.1 limit output to pattern (default: all patterns)
 
-    # Which scenarios to be included                                                                                                        
-    parser.add_option("--scenarios", dest="scenarios_string",
-                    help="Limit the result to some scenarios. Scenarios are indicated with numbers from 1 to 4 and must \
-                        be provided as comma separated (e.g.: -s 1,2,3). See documentation for more details on the scenarios", default = "1,2,3")
+    # Which patterns to be included                                                                                                        
+    parser.add_option("--patterns", dest="patterns_string",
+                    help="Limit the result to some CAAS patterns. Patterns are indicated with numbers from 1 to 3 and must \
+                        be provided as comma separated (e.g.: -s 1,2,3). See documentation for more details on the patterns", default = "1,2,3")
 
     ###     1.4.2 filter per gaps 
 
@@ -228,7 +228,7 @@ if tool.lower() == "discovery":
                 max_bg_miss = options.max_bg_miss_string,
                 max_overall_miss = options.max_miss_string,
 
-                admitted_scenarios = options.scenarios_string,
+                admitted_patterns = options.patterns_string,
                 output_file = options.output_file)
 
     if exists(options.output_file):
@@ -239,13 +239,13 @@ if tool.lower() == "discovery":
 
 
 
-#### TOOL 2. SIMULATE ######################################################################################################
+#### TOOL 2. RESAMPLE ######################################################################################################
 ########################################################################################################################
 
-if tool.lower() == "simulate":
+if tool.lower() == "resample":
 
     ### 2.1 Check the dependencies
-    check_dependencies("simulate", ["dendropy"])
+    check_dependencies("resample", ["dendropy"])
 
     ### 2.2 Init the input parser
     parser = OptionParser()
@@ -258,7 +258,7 @@ if tool.lower() == "simulate":
 
     ###     2.3.2 Output file (the table)
     parser.add_option("-o", "--output", dest="output_file",
-                    help="The output file with simulated traits", default = "none")
+                    help="The output file with resampled traits", default = "none")
 
     ### 2.4 FG and BG size settings
 
@@ -298,7 +298,7 @@ if tool.lower() == "simulate":
 
     ### 2.6 Usage
 
-    parser.usage = "ct simulate -p $phylogenetic_tree (newick format) -f $foreground_size -b $background_size / --bytemp $trait_file -o $output_file\n\nNOTE: to use --mode bm or phylogeny restriction you MUST provide a template (--bytemp)"
+    parser.usage = "ct resample -p $phylogenetic_tree (newick format) -f $foreground_size -b $background_size / --bytemp $trait_file -o $output_file\n\nNOTE: to use --mode bm or phylogeny restriction you MUST provide a template (--bytemp)"
 
     ### 2.7 Parse the options
 
@@ -323,7 +323,7 @@ if tool.lower() == "simulate":
         print("")
         print(parser.usage)
         print("")
-        print("For further info: ct simulate --help")
+        print("For further info: ct resample --help")
         print("")
         exit()
 
@@ -436,7 +436,7 @@ if tool.lower() == "simulate":
         if exists(options.output_file):
             print("\n\nTrait simulation in", options.bootstrap_mode, "mode, based on", options.groupfile, "template and ", options.trait_values, "trait values with", options.cycles, "cycles is done. Simulation file is avaiable at:\n\n\t" + options.output_file)
         else:
-            print("\n\n****ERROR: simulated traits file not generated. See R interpreter output.\n\n")
+            print("\n\n****ERROR: resampled traits file not generated. See R interpreter output.\n\n")
     print("\nThis file can be used as input for the bootstrap tool\n\n")
 
 
@@ -452,7 +452,6 @@ if tool.lower() == "bootstrap":
 
     ### 3.2 Init the input parser
     parser = OptionParser()
-    print("This tool is under construction")
 
     ### 3.3 Inputs and outputs
 
@@ -460,9 +459,9 @@ if tool.lower() == "bootstrap":
     parser.add_option("-t", "--traitfile", dest="config_file",
                     help="The trait config file (read documentation for file formatting)", default = "none")
 
-    ###     3.3.2 Simulated traits File (phylogenetic tree for permulations)
+    ###     3.3.2 Resampled traits File (phylogenetic tree for permulations)
     parser.add_option("-s", "--simtraits", dest="simtraits",
-                    help="The simulated traits file", default = "none")
+                    help="The resampled traits file", default = "none")
 
     ###     3.3.3 Input alignment
     parser.add_option("-a", "--alignment", dest="single_alignment",
@@ -480,12 +479,12 @@ if tool.lower() == "bootstrap":
 
     ### 3.4 Optional and filtering inputs
 
-    ###     3.4.1 limit output to scenario (default: all scenarios)
+    ###     3.4.1 limit output to pattern (default: all patterns)
 
-    # Which scenarios to be included                                                                                                        
-    parser.add_option("--scenarios", dest="scenarios_string",
-                    help="Limit the result to some scenarios. Scenarios are indicated with numbers from 1 to 4 and must \
-                        be provided as comma separated (e.g.: -s 1,2,3). See documentation for more details on the scenarios", default = "1,2,3")
+    # Which patterns to be included                                                                                                        
+    parser.add_option("--patterns", dest="patterns_string",
+                    help="Limit the result to some patterns. Patterns are indicated with numbers from 1 to 4 and must \
+                        be provided as comma separated (e.g.: -s 1,2,3). See documentation for more details on the patterns", default = "1,2,3")
 
     ###     3.4.2 filter per gaps 
 
@@ -528,7 +527,7 @@ if tool.lower() == "bootstrap":
 
     ### 3.5 Usage
 
-    parser.usage = "ct bootstrap -a $alignment_file -s $simulated_traits_file -o $output_file --fmt $alignment_format (default:clustal)"
+    parser.usage = "ct bootstrap -a $alignment_file -s $resampled_traits_file -o $output_file --fmt $alignment_format (default:clustal)"
 
     ### 3.6 Parse the options
 
@@ -578,14 +577,14 @@ if tool.lower() == "bootstrap":
 
     sliced_alignment = runslice(options)
 
-    ###     3.9.2 - Read the simulated traits file
+    ###     3.9.2 - Read the resampled traits file
 
     bootstrap_object = simtrait_revive(options.simtraits)
 
-    ###     3.9.2 - Boot on the alignment file
+    ###     3.9.3 - Boot on the alignment file
     boot_on_single_alignment(
                     trait_config_file= options.config_file,
-                    simulated_traits= bootstrap_object,
+                    resampled_traits= bootstrap_object,
                     sliced_object = sliced_alignment,
 
                     max_fg_gaps = options.max_fg_gaps_string,
@@ -596,8 +595,12 @@ if tool.lower() == "bootstrap":
                     max_bg_miss = options.max_bg_miss_string,
                     max_overall_miss = options.max_miss_string,
 
-                    the_admitted_scenarios = options.scenarios_string,
+                    the_admitted_patterns = options.patterns_string,
                     output_file = options.output_file
                     )
+    
+    ###     3.9.4 Final output
+    print("\n\nBootstrap information available in", options.output_file)
+
 
 

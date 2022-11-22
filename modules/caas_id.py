@@ -29,7 +29,7 @@ process_position()          processes a position from an imported alignment.
                             aminoacid (gaps included) to the
                             species sharing it.
 
-check_scenario()            checks the scenario
+check_pattern()            checks the pattern
 
 fetch_caas()                fetches caas per each thing
 '''                                                       
@@ -164,15 +164,15 @@ def process_position(position, multiconfig, species_in_alignment):
     return z
 
 
-# FUNCTION check_scenario()
-# checks the scenario
+# FUNCTION check_pattern()
+# checks the pattern
 
 def iscaas(input_string):
     
     class caaspositive():
         def __init__(self):
             self.caas = True
-            self.scenario = "4"
+            self.pattern = "4"
     
     z = caaspositive()
 
@@ -186,24 +186,24 @@ def iscaas(input_string):
             z.caas = False
             break
 
-    # What is the scenario?
+    # What is the pattern?
     if len(fg) == 1 and len(bg) == 1:
-        z.scenario = "1"
+        z.pattern = "1"
     
     elif len(fg) == 1:
-        z.scenario = "2"
+        z.pattern = "2"
     elif len(bg) == 1:
-        z.scenario = "3"
+        z.pattern = "3"
     
     if len(fg) == 0 or len(bg) == 0:
-        z.scenario = "null"
+        z.pattern = "null"
     
     return z
 
 # FUNCTION fetch_caas():
 # fetches caas per each thing
 
-def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgaps_fg, maxgaps_bg, maxgaps_all, maxmiss_fg, maxmiss_bg, maxmiss_all, admitted_scenarios = ["1","2","3"]):
+def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgaps_fg, maxgaps_bg, maxgaps_all, maxmiss_fg, maxmiss_bg, maxmiss_all, admitted_patterns = ["1","2","3"]):
 
     a = set(list_of_traits)
     b = set(processed_position.trait2aas_fg.keys())
@@ -269,7 +269,7 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
 
         output_traits = []
 
-        # Filter for scenario
+        # Filter for pattern
         for x in valid_traits:
             aa_tag_fg_list = processed_position.trait2aas_fg[x]
             aa_tag_fg_list.sort()
@@ -283,8 +283,8 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
 
             check = iscaas(tag)
 
-            if check.caas == True and check.scenario in admitted_scenarios:
-                output_traits.append(x + "@" + tag + "@scenario" + check.scenario)
+            if check.caas == True and check.pattern in admitted_patterns:
+                output_traits.append(x + "@" + tag + "@pattern" + check.pattern)
         
 
         # Print the output
@@ -295,7 +295,7 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
             "Position",
             "Substitution",
             "Pvalue",
-            "Scenario",
+            "Pattern",
             "FFGN",
             "FBGN",
             "GFG",
@@ -320,7 +320,7 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
 
                 traitname = trait.split("@")[0]            
                 change = trait.split("@")[1]
-                thescenario = trait.split("@")[2]
+                thepattern = trait.split("@")[2]
 
                 fg_species_number = str(len(processed_position.trait2ungapped_fg[traitname]))
                 bg_species_number = str(len(processed_position.trait2ungapped_bg[traitname]))
@@ -355,7 +355,7 @@ def fetch_caas(genename, processed_position, list_of_traits, output_file, maxgap
                         processed_position.position,
                         change,
                         pvalue_string,
-                        thescenario,
+                        thepattern,
                         fg_species_number,
                         bg_species_number,
                         str(processed_position.trait2gaps_fg[traitname]),

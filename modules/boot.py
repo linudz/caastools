@@ -80,7 +80,7 @@ def filter_for_missings(max_m_bg, max_m_fg, max_m_all, mfg, mbg):
 
 
 
-def caasboot(processed_position, genename, list_of_traits, maxgaps_fg, maxgaps_bg, maxgaps_all, maxmiss_fg, maxmiss_bg, maxmiss_all, admitted_scenarios = ["1","2","3"], cycles = 1000):
+def caasboot(processed_position, genename, list_of_traits, maxgaps_fg, maxgaps_bg, maxgaps_all, maxmiss_fg, maxmiss_bg, maxmiss_all, cycles, admitted_patterns):
 
     a = set(list_of_traits)
     b = set(processed_position.trait2aas_fg.keys())
@@ -128,7 +128,7 @@ def caasboot(processed_position, genename, list_of_traits, maxgaps_fg, maxgaps_b
 
             check = iscaas(tag)
 
-            if check.caas == True and check.scenario in admitted_scenarios:
+            if check.caas == True and check.pattern in admitted_patterns:
                 return True
     
     output_traits = filter(functools.partial(
@@ -152,10 +152,11 @@ def caasboot(processed_position, genename, list_of_traits, maxgaps_fg, maxgaps_b
     
     position_name = genename + "@" + str(processed_position.position)
     count = str(len(output_traits))
-    pvalue = str(len(output_traits)/cycles)
-    traitline = ",".join(output_traits)
 
-    outline = "\t".join([position_name, count, pvalue, traitline])
+    traitline = ",".join(output_traits)
+    empval = str(int(count)/cycles)
+
+    outline = "\t".join([position_name, count, str(cycles), empval, traitline])
 
     return outline
         
@@ -163,19 +164,20 @@ def caasboot(processed_position, genename, list_of_traits, maxgaps_fg, maxgaps_b
 # FUNCTION disco_bootstrap()
 # Launches the bootstrap in several lines. Returns a dictionary gene@position --> pvalue
 
-def boot_on_single_alignment(trait_config_file, simulated_traits, sliced_object, max_fg_gaps, max_bg_gaps, max_overall_gaps, max_fg_miss, max_bg_miss, max_overall_miss, the_admitted_scenarios, output_file):
+def boot_on_single_alignment(trait_config_file, resampled_traits, sliced_object, max_fg_gaps, max_bg_gaps, max_overall_gaps, max_fg_miss, max_bg_miss, max_overall_miss, the_admitted_patterns, output_file):
 
 
     # Step 3: processes the positions from imported alignment (process_position() from caas_id.py)
-    processed_positions = map(functools.partial(process_position, multiconfig = simulated_traits, species_in_alignment = sliced_object.species), sliced_object.d)
+    processed_positions = map(functools.partial(process_position, multiconfig = resampled_traits, species_in_alignment = sliced_object.species), sliced_object.d)
     the_genename = sliced_object.genename
+    print("caastools found", resampled_traits.cycles, "resamplings")
 
     # Step 4: extract the raw caas
 
     output_lines = map(
         functools.partial(
             caasboot,
-            list_of_traits = simulated_traits.alltraits,
+            list_of_traits = resampled_traits.alltraits,
             genename = the_genename,
             maxgaps_fg = max_fg_gaps,
             maxgaps_bg = max_bg_gaps,
@@ -185,8 +187,8 @@ def boot_on_single_alignment(trait_config_file, simulated_traits, sliced_object,
             maxmiss_bg = max_bg_miss,
             maxmiss_all = max_overall_miss,
 
-            admitted_scenarios = the_admitted_scenarios,
-            cycles = 1000) ,processed_positions
+            admitted_patterns = the_admitted_patterns,
+            cycles = resampled_traits.cycles) ,processed_positions
     )
 
     output_lines = list(output_lines)

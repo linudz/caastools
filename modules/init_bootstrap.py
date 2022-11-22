@@ -102,7 +102,7 @@ def readtree(tree_file, tree_schema = "newick"):
     return z
 
 
-# FUNCTION simtrait() Simulate trait function
+# FUNCTION simtrait() Resample trait function
 
 def simtrait(fg_len, bg_len, template, tree_file, mode, groupfile, phenotype_values_file, cycles, simtraits_outfile, permulation_selection_strategy = "random"):
     
@@ -166,21 +166,21 @@ def simtrait(fg_len, bg_len, template, tree_file, mode, groupfile, phenotype_val
 
             z.alltraits.append(cycle_tag)
 
-            simulated_fg = []
-            simulated_bg = []
+            resampled_fg = []
+            resampled_bg = []
 
-            while len(simulated_fg) < fg_len:
+            while len(resampled_fg) < fg_len:
                 k = random.choice(species)
 
-                if k not in simulated_fg:
-                    simulated_fg.append(k)
+                if k not in resampled_fg:
+                    resampled_fg.append(k)
         
-            while len(simulated_bg) < bg_len:
+            while len(resampled_bg) < bg_len:
                 k = random.choice(species)
-                if k not in simulated_bg and k not in simulated_fg:
-                    simulated_bg.append(k)
+                if k not in resampled_bg and k not in resampled_fg:
+                    resampled_bg.append(k)
             
-            allcycles.append([simulated_fg, simulated_bg, cycle_tag])
+            allcycles.append([resampled_fg, resampled_bg, cycle_tag])
         
         for c in allcycles:
 
@@ -256,8 +256,8 @@ def simtrait(fg_len, bg_len, template, tree_file, mode, groupfile, phenotype_val
 
             z.alltraits.append(cycle_tag)
 
-            simulated_fg = []
-            simulated_bg = []
+            resampled_fg = []
+            resampled_bg = []
 
             for x in fg:
                 flag = 0
@@ -265,8 +265,8 @@ def simtrait(fg_len, bg_len, template, tree_file, mode, groupfile, phenotype_val
                     g = s2g[x]
                     x = random.choice(g2s[g])
 
-                    if x not in simulated_fg:
-                        simulated_fg.append(x)
+                    if x not in resampled_fg:
+                        resampled_fg.append(x)
                         flag = 1
 
 
@@ -276,15 +276,15 @@ def simtrait(fg_len, bg_len, template, tree_file, mode, groupfile, phenotype_val
                     g = s2g[x]
                     x = random.choice(g2s[g])
 
-                    if x not in simulated_bg and x not in simulated_fg:
-                        simulated_bg.append(x)
+                    if x not in resampled_bg and x not in resampled_fg:
+                        resampled_bg.append(x)
                         flag = 1
 
 
-            simulated_bg.sort()
-            simulated_fg.sort()
+            resampled_bg.sort()
+            resampled_fg.sort()
             
-            allcycles.append([simulated_fg, simulated_bg, cycle_tag])
+            allcycles.append([resampled_fg, resampled_bg, cycle_tag])
 
         for c in allcycles:
 
@@ -334,7 +334,7 @@ def simtrait(fg_len, bg_len, template, tree_file, mode, groupfile, phenotype_val
         ])
         os.system(r_line)
 
-# FUNCTION simtrait_revive() revive simulated trait from
+# FUNCTION simtrait_revive() revive resampled trait from
 
 def simtrait_revive(traitfile):
     
@@ -347,6 +347,7 @@ def simtrait_revive(traitfile):
             self.alltraits = []
             self.trait2fg = {}
             self.trait2bg = {}
+            self.cycles = 0
 
         def update_dictionary(self, traitname, species, group):
             try:
@@ -387,6 +388,7 @@ def simtrait_revive(traitfile):
 
     with open(traitfile) as tf_handle:
         tf = tf_handle.read().splitlines()
+        z.cycles = len(tf)
     
     for line in tf:
         try:
