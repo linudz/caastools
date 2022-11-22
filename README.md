@@ -695,19 +695,21 @@ The output consists in a tabbed file with three columns
 
 Column 1: Position
 
-Column 2: Number of CAAS
+Column 2: Number of resamples returning a CAAS in the position
 
-Column 3: Total Number of cycles
+Column 3: Number of cycles
 
-Column 4: Cycles with positive CAAS
+Column 4: Bootstrap value
+
+Column 5: Cycles with positive CAAS
 
 
 ## 5.4 Examples
 
 
-### Bootstrap from BM resampled traits.
+### Bootstrap from random resampled traits.
 
-`ct bootstrap -s test/resample/random.resampling.tab -a examples/MSA/primates.msa.pr -o examples/bm.bootstrap.tab --fmt phylip-relaxed -t test/BodyMass_kg_permulation.cf`
+`ct bootstrap -s test/resample/random.resampling.tab -a examples/MSA/primates.msa.pr -o examples/random.bootstrap.tab --fmt phylip-relaxed -t test/BodyMass_kg_permulation.cf`
 
 5. License
 
