@@ -660,6 +660,10 @@ Here’s an example of the first ten lines of a resampled traits output file.
 
 `ct resample -p examples/phylogeny.nw --bytemp examples/config.tab -m random --cycles 500 -o test/resample/random.resampling.bytemplate.tab`
 
+**Phylogeny restricted (must go by template)**
+
+`ct resample -p examples/phylogeny.nw --bytemp examples/config.tab -m random --limit_by_group test/sp2fam.210727.tab --cycles 500 -o test/resample/random.resampling.bytemplate.tab`
+
 
 ### Ex.2 resampling based on BM 
 
