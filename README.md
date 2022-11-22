@@ -707,7 +707,7 @@ Column 4: Cycles with positive CAAS
 
 ### Bootstrap from BM resampled traits.
 
-`ct bootstrap -s test/resample/BM.resampling.tab -a examples/MSA/primates.msa.pr -o examples/bm.bootstrap.tab`
+`ct bootstrap -s test/resample/random.resampling.tab -a examples/MSA/primates.msa.pr -o examples/bm.bootstrap.tab --fmt phylip-relaxed -t test/BodyMass_kg_permulation.cf`
 
 5. License
 
