@@ -718,7 +718,7 @@ This software is licensed under GNU General Public License. The kind of license 
 
 # 6. How to cite
 
-The application note for CAAStools is under publication.
+The application note for CAAStools is [available as a preprint in bioRxiv](https://doi.org/10.1101/2022.12.14.520422).
 
 
 # 7. How to contact the development team
