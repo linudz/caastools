@@ -709,7 +709,7 @@ Column 5: Cycles with positive CAAS
 
 ### Bootstrap from random resampled traits.
 
-`ct bootstrap -s test/resample/random.resampling.tab -a examples/MSA/primates.msa.pr -o examples/random.bootstrap.tab --fmt phylip-relaxed`
+`ct bootstrap -s test/resample/random.resampling.tab -t examples/config.tab -a examples/MSA/primates.msa.pr -o examples/random.bootstrap.tab --fmt phylip-relaxed`
 
 5. License
 
