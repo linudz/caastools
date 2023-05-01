@@ -295,7 +295,7 @@ By default, CAAStools discovery accepts a maximum of n-1 gaps or missing species
   <tr>
    <td>Max overall gaps
    </td>
-   <td>--max_fg_gaps
+   <td>--max_gaps
    </td>
    <td>Filter by total number of gaps
    </td>
@@ -343,7 +343,7 @@ By default, CAAStools discovery accepts a maximum of n-1 gaps or missing species
   <tr>
    <td>Max overall missing species
    </td>
-   <td>--max_fg_miss
+   <td>--max_miss
    </td>
    <td>Filter by total number of missing species
    </td>
