@@ -38,13 +38,14 @@ def count_symbols(list1, list2):
 
 # FUNCTION pstate() - Calculate the statistics of a symbol combination ()
 
-def pstate(iterable, freq_dictionary, set_size, contrast_size):
+def pstate(iterable, freq_dictionary, set_size, contrast_size, mode = "independent"):
 
     '''
+
     Hypergeometric variables
 
     M = IL MAZZO DI CARTE
-    Mn = IL MAZZO DI CARTE SAPENDO CHE L'AVVERSARIO (BACKGROUND) HA COLTO LE SUE (M - CONTRAST_SIZE)
+    Mn = IL MAZZO DI CARTE SAPENDO CHE L'AVVERSARIO (FOREGROUND) HA COLTO LE SUE (M - CONTRAST_SIZE)
     N = IL NUMERO DI CARTE CHE VUOI NEL MAZZO = sum of the frequences of the iterable
     n = LE CARTE CHE HAI IN MANO (SET_SIZE)
     k LE CARTE CHE HAI IN MANO E CHE COINCIDONO CON (N) -----> n = k (SET_SIZE)
@@ -53,7 +54,11 @@ def pstate(iterable, freq_dictionary, set_size, contrast_size):
     '''
     
     M = functools.reduce(lambda a, b: a+b, freq_dictionary.values())
-    Mn = M - contrast_size
+
+    if mode != "independent":
+        Mn = M - contrast_size
+    else:
+        Mn = M
 
     it_freqs = map(lambda x : freq_dictionary[x], iterable)
     N = functools.reduce(lambda a, b: a+b, it_freqs)
@@ -70,8 +75,7 @@ def pstate(iterable, freq_dictionary, set_size, contrast_size):
 
 def sstate(combination, freq_dictionary, fg_size, bg_size):
     f = pstate(list(combination[0]), freq_dictionary, fg_size, bg_size)
-    b = pstate(list(combination[1]), freq_dictionary, bg_size, fg_size)
-
+    b = pstate(list(combination[1]), freq_dictionary, bg_size, fg_size, mode="dependent")
     return f * b
 
 # FUNCTION calcpval_random() - fetches a pvalue from a line, given foreground and background sizes
@@ -89,33 +93,47 @@ def calcpval_random(line_dictionary, genename, fg_size, bg_size):
 
             self.fgsize = fg_size
             self.bgsize = bg_size
+            self.iseven = True
 
             self.pvalue = 0
 
             self.out_tuple = ()
 
         def combine(self):
+            # Correction for even fg/bg comparisons
+
+            self.iseven = self.fgsize == self.bgsize
+
             for x in self.s:
                 bg = list(set(self.s))
                 bg.remove(x)
                 self.c.append([[x], bg])
-                self.c.append([bg, [x]])
+
+                if self.iseven == False:
+                    self.c.append([bg, [x]])
             
             self.uc = list(combinations(self.s, 2))
-            rec = map(lambda x : (x[1], x[0]), self.uc)
 
-            self.uc = self.uc + list(rec)
-        
+            if self.iseven == False:
+                rec = map(lambda x : (x[1], x[0]), self.uc)
+
+                self.uc = self.uc + list(rec)
+            
+
         def dostat(self):
 
             combresults = list(map(functools.partial(sstate, freq_dictionary = self.sfreq, fg_size = self.fgsize, bg_size = self.bgsize), self.c))
             p_comb = functools.reduce(lambda a, b: a+b, combresults)
                         
-            if len(self.s) > 2:                     # You will subtract one to one combinations only w 3+ AAs
+            if len(self.s) > 2:                     # You will subtract one to one combinations only w 3+ AAs AND HERE
                 
                 u_combresults = list(map(functools.partial(sstate, freq_dictionary = self.sfreq, fg_size = self.fgsize, bg_size = self.bgsize), self.uc))
                 up_comb = functools.reduce(lambda a, b: a+b, u_combresults)
-                self.pvalue = p_comb - up_comb
+                
+                if self.iseven == False:
+                    self.pvalue = p_comb - up_comb
+                else:
+                    self.pvalue = p_comb
 
             else:
                 self.pvalue = p_comb
@@ -127,15 +145,14 @@ def calcpval_random(line_dictionary, genename, fg_size, bg_size):
     symbols = list(map(lambda x : x.split("@")[0], line_dictionary.values()))
     z.p = list(map(lambda x : x.split("@")[1], line_dictionary.values()))[0]
     
-    try:
-        symbols.remove("-") # Clean the gaps...
-    except:
-        pass                # ...if any.
-
+    accepted_symbols = []
+    for x in symbols:
+        if x != "-":
+            accepted_symbols.append(x) # Clean the gaps...
     # Load the z object
 
-    z.s = set(symbols)
-    z.sfreq = count_symbols(z.s, symbols)
+    z.s = set(accepted_symbols)
+    z.sfreq = count_symbols(z.s, accepted_symbols)
     z.combine()
     z.dostat()
 

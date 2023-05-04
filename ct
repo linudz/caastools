@@ -9,6 +9,7 @@
 
 
 '''
+
 A Convergent Amino Acid Substitution identification 
 and analysis toolbox
 
@@ -21,6 +22,9 @@ Contributors:   Alejandro Valenzuela (alejandro.valenzuela@upf.edu)
 MODULE NAME:    ct
 DESCRIPTION:    Launcher script. Calls the different tools.
 DEPENDENCIES:   Directly or indirectly, all the modules are connected to this script
+
+Version 0.9.1 - May 2023
+
 '''
 
 ### Introduction
@@ -406,7 +410,7 @@ if tool.lower() == "resample":
     print(application_info)
     print("")
 
-    print("[BOOTSTRAP TOOL] - Simulating traits...")
+    print("[RESAMPLE TOOL] - Simulating traits...")
 
 
     w = simtrait(
@@ -527,7 +531,7 @@ if tool.lower() == "bootstrap":
 
     ### 3.5 Usage
 
-    parser.usage = "ct bootstrap -a $alignment_file -s $resampled_traits_file -o $output_file --fmt $alignment_format (default:clustal)"
+    parser.usage = "ct bootstrap -a $alignment_file -t $trait_config_file -s $resampled_traits_file -o $output_file --fmt $alignment_format (default:clustal)"
 
     ### 3.6 Parse the options
 
