@@ -19,6 +19,9 @@ CAAStools is a collection of 3 bioinformatics tools written in Python 3.9.4. **F
 
 The output of the discovery tool consists in a table reporting a list of CAAS associations. A corresponding p-value is calculated as the probability of randomly finding a CAAS association in that position (see our preprint for a full explanation about the statistical testing of CAAS).
 
+## Usage example and cookbook.
+
+[Under construction]
 
 # 2 Download, installation and updates.
 
