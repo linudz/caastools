@@ -19,7 +19,9 @@ CAAStools is a collection of 3 bioinformatics tools written in Python 3.9.4. **F
 
 The output of the discovery tool consists in a table reporting a list of CAAS associations. A corresponding p-value is calculated as the probability of randomly finding a CAAS association in that position (see our preprint for a full explanation about the statistical testing of CAAS).
 
-## Usage example and cookbook.
+## 1.2 Usage info and examples
+
+The **caastools/examples** folder in the repository contains the files to run the examples described in this documentation. The supplementary information in our preprint ([Barteri et al., 2023](https://doi.org/10.1101/2022.12.14.520422)) describe the detection and the statistical testing of the gene BRCA2 from [Farré et al., 2021](https://doi.org/10.1093/molbev/msab219) analysis. The results and raw files about this example are in the folder **caastools/examples/longevity.2021**.
 
 [Under construction]
 
@@ -679,6 +681,7 @@ Here’s an example of the first ten lines of a resampled traits output file.
 
 # 5 Bootstrap Tool
 
+**NOTE**: The comparison of the different statistical testings are described in Supplementary Material 3 in [CAAStools manuscript](https://doi.org/10.1101/2022.12.14.520422).
 
 ## 5.1 Algorithm overview 
 
