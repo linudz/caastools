@@ -1,0 +1,10 @@
+You can access the following files for bootstrap results
+
+rndm.tab (random bootstrap)
+guided.tab (phylogeny restricted bootstrap)
+bm.tab (brownian-motion bootstrap)
+
+in the following Google Drive folder:
+
+https://drive.google.com/drive/folders/1x6gD6AfdIjKAPnezqAMa9iQPeMoWA5pR?usp=sharing
+
