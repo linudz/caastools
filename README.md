@@ -727,7 +727,7 @@ This software is licensed under GNU General Public License. The kind of license 
 The application note for CAAStools is [available as a preprint in bioRxiv](https://doi.org/10.1101/2022.12.14.520422).
 
 
-# 7. How to contact the development team
+# 7. Questions and troubleshooting 
 
-For any inquire, please contact Fabio Barteri at Pompeu Fabra University / BBRC [fabio.barteri@upf.edu](mailto:fabio.barteri@upf.edu)
+You can ask your questions through the [discussions section](https://github.com/linudz/caastools/discussions) of CAAStools github. Also, you can contact Fabio Barteri at Pompeu Fabra University / BBRC [fabio.barteri@upf.edu](mailto:fabio.barteri@upf.edu)
 
