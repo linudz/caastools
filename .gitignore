@@ -1,2 +1,6 @@
 test
 examples
+.Rproj.user
+caastools.Rproj
+.RData
+.Rhistory
