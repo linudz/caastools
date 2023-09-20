@@ -1,3 +1,7 @@
+# Discovery/Bootstrap
 biopython==1.79
 scipy
 numpy
+
+# Resample
+Dendropy 

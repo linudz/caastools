@@ -5,3 +5,4 @@ caastools.Rproj
 .RData
 .Rhistory
 workspace
+.venv
