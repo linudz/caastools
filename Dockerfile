@@ -1,5 +1,6 @@
 # Deriving the R-base 4.3.1 for repro
 # Maybe use a more mainstream container
+# maaybe build something that already has devtools and fuck this
 FROM thomaschln/r-devtools:latest
 
 # Set session as noninteractive and install/upgrade common debian packages
@@ -18,14 +19,17 @@ RUN apt-get update \
 RUN pip3 install --upgrade pip
 
 WORKDIR /app
-ADD requirements/requirements.txt .
-ADD requirements/requirements.r .
+ADD requirements/requirements.txt ./requirements/
+ADD requirements/requirements.r ./requirements/
+ADD modules/ ./modules/
+ADD scripts/ ./scripts/
 ADD ct .
-ADD modules/ .
-ADD scripts/ .
+RUN chmod +x ./ct
+
 
 # Installing Python libraries (Discovery/Bootstrap/Resample)
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements/requirements.txt
 
 # Installing R libraries (BM Resampling)
-RUN Rscript requirements.r
+RUN Rscript requirements/requirements.r
+# think about not automatizing this
