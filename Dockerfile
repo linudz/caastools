@@ -1,14 +1,6 @@
 ## Emacs, make this -*- mode: sh; -*-
 FROM ubuntu:jammy
 
-## Set a default user. Available via runtime flag `--user docker` 
-## Add user to 'staff' group, granting them write privileges to /usr/local/lib/R/site.library
-## User should also have & own a home directory (for rstudio or linked volumes to work properly). 
-RUN useradd docker \
-	&& mkdir /home/docker \
-	&& chown docker:docker /home/docker \
-	&& addgroup docker staff
-
 # Set session as noninteractive and install required debian packages
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
@@ -21,19 +13,7 @@ RUN apt-get update \
 		locales \
 		vim-tiny \
 		wget \
-		ca-certificates \
-        cmake
-
-## Configure default locale, see https://github.com/rocker-org/rocker/issues/19
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-	&& locale-gen en_US.utf8 \
-	&& /usr/sbin/update-locale LANG=en_US.UTF-8
-
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-
-## Otherwise timedatectl will get called which leads to 'no systemd' inside Docker
-ENV TZ UTC
+		ca-certificates
 
 # Set installation as noninteractive and install required python/r dependencies
 # is it a good idea to explicit python and r deffinitions? also rerconverge
@@ -52,7 +32,6 @@ RUN pip3 install --upgrade pip
 WORKDIR /ct
 RUN mkdir -p ./requirements ./modules ./scripts
 ADD requirements/requirements.txt ./requirements/
-ADD requirements/requirements.r ./requirements/
 ADD modules/ ./modules/
 ADD scripts/ ./scripts/
 # Make ct executable and add to $PATH
