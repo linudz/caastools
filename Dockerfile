@@ -21,7 +21,8 @@ RUN apt-get update \
 		locales \
 		vim-tiny \
 		wget \
-		ca-certificates
+		ca-certificates \
+        cmake
 
 ## Configure default locale, see https://github.com/rocker-org/rocker/issues/19
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
@@ -42,13 +43,7 @@ RUN apt-get update \
         apt-get install -y --no-install-recommends \
             python3 \
             python3-pip \
-            python3-setuptools \
-            r-base \
-            r-base-dev \
-            r-recommended \
-            r-cran-devtools \
-        && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
-        && rm -rf /var/lib/apt/lists/*
+            python3-setuptools
 
 # JIC
 RUN pip3 install --upgrade pip
@@ -68,7 +63,6 @@ ENV PATH=/ct:$PATH
 # Installing Python libraries (Discovery/Bootstrap/Resample)
 RUN pip3 install -r requirements/requirements.txt
 
-# Installing R libraries (BM Resampling)
-RUN Rscript requirements/requirements.r
+# NOTE: No R installation is included, use biocontainers/rerconverge package
 
 CMD ["bash"]
