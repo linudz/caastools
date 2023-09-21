@@ -9,7 +9,7 @@ RUN useradd docker \
 	&& chown docker:docker /home/docker \
 	&& addgroup docker staff
 
-# Set session as noninteractive and install/upgrade needed debian packages
+# Set session as noninteractive and install required debian packages
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
     apt-get install -qq -y --no-install-recommends \ 
@@ -34,6 +34,7 @@ ENV LANG en_US.UTF-8
 ## Otherwise timedatectl will get called which leads to 'no systemd' inside Docker
 ENV TZ UTC
 
+# Set installation as noninteractive and install required python/r dependencies
 # is it a good idea to explicit python and r deffinitions? also rerconverge
 RUN apt-get update \
         && DEBIAN_FRONTEND=noninteractive \
@@ -49,16 +50,17 @@ RUN apt-get update \
         && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
         && rm -rf /var/lib/apt/lists/*
 
-
-
+# JIC
 RUN pip3 install --upgrade pip
 
+# Set CAASTools WD and build directory structure
 WORKDIR /ct
 RUN mkdir -p ./requirements ./modules ./scripts
 ADD requirements/requirements.txt ./requirements/
 ADD requirements/requirements.r ./requirements/
 ADD modules/ ./modules/
 ADD scripts/ ./scripts/
+# Make ct executable and add to $PATH
 ADD ct .
 RUN chmod +x ./ct
 ENV PATH=/ct:$PATH
