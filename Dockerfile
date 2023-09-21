@@ -20,6 +20,9 @@ RUN pip3 install --upgrade pip
 WORKDIR /app
 ADD requirements/requirements.txt .
 ADD requirements/requirements.r .
+ADD ct .
+ADD modules/ .
+ADD scripts/ .
 
 # Installing Python libraries (Discovery/Bootstrap/Resample)
 RUN pip3 install -r requirements.txt
