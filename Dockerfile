@@ -36,6 +36,7 @@ ENV TZ UTC
 
 # Set installation as noninteractive and install required python/r dependencies
 # is it a good idea to explicit python and r deffinitions? also rerconverge
+# explore the idea of adding radian for an actually useful R console
 RUN apt-get update \
         && DEBIAN_FRONTEND=noninteractive \
         apt-get install -y --no-install-recommends \
@@ -46,7 +47,6 @@ RUN apt-get update \
             r-base-dev \
             r-recommended \
             r-cran-devtools \
-
         && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
         && rm -rf /var/lib/apt/lists/*
 
