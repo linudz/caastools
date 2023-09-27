@@ -2,6 +2,9 @@
 
 nextflow.enable.dsl=2
 
+// Think about separating main from ct workflow
+// Think about adding a test through nf-validation
+
 /* /*
  * CAASTools test pipe
  * @authors
@@ -46,14 +49,36 @@ align_tuple = Channel
                 .map { file -> tuple(file.baseName, file) }
 config = file(params.traitfile)
 
-include { ct_discovery } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT LOCAL MODULES/SUBWORKFLOWS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
+
+include { ct_discovery } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
+//include { ct_resample } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
+//include { ct_bootstrap } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
+
+//// include { INPUT_CHECK } from '../subworkflows/local/input_check'
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    RUN MAIN WORKFLOW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+def caastools_report = []
+
+
+
+// ENTRY WORKFLOW MUST BE SET IN THE MAIN.NF
 workflow {
-	discovery_out = ct_discovery(align_tuple, config)
+    discovery_out = ct_discovery(align_tuple, config)
 }
 
 
 
 workflow.onComplete {
-	println ( workflow.success ? "\nYay!\n" : "Oops .. something went wrong" )
+    println ( workflow.success ? "\nYay!\n" : "Oops .. something went wrong" )
 }

@@ -7,10 +7,4 @@ workspace
 output_*
 .nextflow*
 work
-results/11-08-2023 18:37 UTC/discovery_output/primates1.msa.output
-results/11-08-2023 18:37 UTC/discovery_output/primates2.msa.output
-results/11-08-2023 18:37 UTC/discovery_output/primates3.msa.output
-results/11-08-2023 18:37 UTC/discovery_output/primates4.msa.output
-results/11-08-2023 18:37 UTC/discovery_output/primates5.msa.output
-results/11-08-2023 18:37 UTC/discovery_output/primates6.msa.output
-results/11-08-2023 18:37 UTC/discovery_output/primates7.msa.output
+results
