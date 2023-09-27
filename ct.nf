@@ -1,13 +1,6 @@
-#!/usr/bin/env caastools
-
-// I don't know if above env has to be set to nextflow
-
-/* 
- * This code enables the new dsl of Nextflow. 
- */
+#!/usr/bin/env nextflow
 
 nextflow.enable.dsl=2
-
 
 /* /*
  * CAASTools test pipe
@@ -30,7 +23,7 @@ params.help             = false
 log.info """
 BIOCORE@CRG - N F TESTPIPE  ~  version ${version}
 =============================================
-single_alignment            : ${params.alignment}
+alignment                   : ${params.alignment}
 fmt                         : ${params.ali_format}
 config                      : ${params.traitfile}
 """
@@ -47,19 +40,16 @@ if (params.help) {
 /*
  * Defining the output folders
  */
-discoveryOutput = "output_discovery"
-resampleOutput = "output_resample"
-bootstrapOutput = "ouptut_bootstrap"
 
-single_alignment = file(params.alignment)
+align_tuple = Channel
+                .fromPath(params.alignment)
+                .map { file -> tuple(file.baseName, file) }
 config = file(params.traitfile)
 
-include { ct_discovery } from "${baseDir}/nf_modules/ct_discovery" addParams(OUTPUT: discoveryOutput, LABEL:"twocpus") 
-//include { ct_resample } from "${baseDir}/ct" addParams(OUTPUT: resampleOutput, LABEL:"twocpus") 
-//include { ct_bootstrap } from "${baseDir}/ct" addParams(OUTPUT: bootstrapOutput, LABEL:"twocpus") 
+include { ct_discovery } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
 
 workflow {
-	discovery_out = ct_discovery(single_alignment, config)
+	discovery_out = ct_discovery(align_tuple, config)
 }
 
 

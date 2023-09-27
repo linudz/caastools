@@ -1,5 +1,5 @@
 /*
-*  discovery module
+*  bootstrap module
 */
 
 params.CONTAINER = "miralnso/caastools-barebones:latest"
