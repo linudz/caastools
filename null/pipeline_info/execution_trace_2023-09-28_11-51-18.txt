@@ -1,0 +1,8 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+6	25/f41b88	354501	CT:ct_discovery:DISCOVERY (primates6.msa)	FAILED	125	2023-09-28 11:51:20.248	3.4s	3.3s	-	-	-	-	-
+7	77/3b5f8a	354517	CT:ct_discovery:DISCOVERY (primates7.msa)	FAILED	125	2023-09-28 11:51:20.258	3.4s	3.4s	-	-	-	-	-
+1	5a/f9a81c	354539	CT:ct_discovery:DISCOVERY (primates1.msa)	FAILED	125	2023-09-28 11:51:20.266	3.4s	3.4s	-	-	-	-	-
+5	0d/c78497	354572	CT:ct_discovery:DISCOVERY (primates5.msa)	FAILED	125	2023-09-28 11:51:20.274	3.4s	3.4s	-	-	-	-	-
+4	9d/df9ab1	354602	CT:ct_discovery:DISCOVERY (primates4.msa)	FAILED	125	2023-09-28 11:51:20.281	3.4s	3.4s	-	-	-	-	-
+2	10/52f62f	354635	CT:ct_discovery:DISCOVERY (primates2.msa)	FAILED	125	2023-09-28 11:51:20.290	3.4s	3.4s	-	-	-	-	-
+3	e7/9f4ca6	354678	CT:ct_discovery:DISCOVERY (primates3.msa)	FAILED	125	2023-09-28 11:51:20.300	3.4s	3.4s	-	-	-	-	-

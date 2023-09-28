@@ -1,0 +1,8 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+6	b9/35d96e	364500	CT:ct_discovery:DISCOVERY (primates6.msa)	COMPLETED	0	2023-09-28 12:03:21.839	2.6s	1.4s	163.9%	84.7 MB	1.4 GB	13.4 MB	5.4 KB
+1	e4/893bf8	364513	CT:ct_discovery:DISCOVERY (primates1.msa)	COMPLETED	0	2023-09-28 12:03:21.846	2.8s	1.4s	136.7%	87.2 MB	1.4 GB	13.4 MB	5.4 KB
+2	f7/3c64ff	364463	CT:ct_discovery:DISCOVERY (primates2.msa)	COMPLETED	0	2023-09-28 12:03:21.821	3.2s	1.4s	179.1%	96.6 MB	1.4 GB	13.4 MB	5.4 KB
+4	80/cc8b0b	364539	CT:ct_discovery:DISCOVERY (primates4.msa)	COMPLETED	0	2023-09-28 12:03:21.856	3.3s	1.3s	185.8%	97.8 MB	1.4 GB	13.4 MB	5.4 KB
+3	12/94b418	364605	CT:ct_discovery:DISCOVERY (primates3.msa)	COMPLETED	0	2023-09-28 12:03:21.872	3.3s	1.1s	171.2%	98.3 MB	1.4 GB	13.4 MB	5.4 KB
+5	74/52d46b	364636	CT:ct_discovery:DISCOVERY (primates5.msa)	COMPLETED	0	2023-09-28 12:03:21.885	3.5s	1.2s	199.6%	98 MB	1.4 GB	13.4 MB	5.4 KB
+7	fc/7997c1	364569	CT:ct_discovery:DISCOVERY (primates7.msa)	COMPLETED	0	2023-09-28 12:03:21.864	3.7s	1.2s	185.7%	98.4 MB	1.4 GB	13.4 MB	5.4 KB

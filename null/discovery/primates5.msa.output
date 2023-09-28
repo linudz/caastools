@@ -1,0 +1,8 @@
+Gene	Trait	Position	Substitution	Pvalue	Pattern	FFGN	FBGN	GFG	GBG	MFG	MBG	FFG	FBG	MS
+primates5	config.tab	131	PS/L	0.014490253454333423	pattern3	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+primates5	config.tab	210	V/A	0.02310919215019119	pattern1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+primates5	config.tab	236	S/P	0.028683988583850475	pattern1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+primates5	config.tab	266	S/P	0.012118115289445836	pattern1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+primates5	config.tab	280	L/IP	0.029808326513128106	pattern2	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+primates5	config.tab	427	E/Q	0.02310919215019119	pattern1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-
+primates5	config.tab	444	H/Q	0.02310919215019119	pattern1	4	3	0	0	0	0	Gorilla_beringei,Gorilla_gorilla,Macaca_thibetana,Mandrillus_leucophaeus	Aotus_griseimembra,Avahi_peyrierasi,Callibella_humilis	-

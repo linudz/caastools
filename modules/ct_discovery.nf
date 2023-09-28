@@ -21,16 +21,16 @@ process DISCOVERY {
     
     // when:
     // task.ext.when == null || task.ext.when
-    
+
     script:
     // Define extra discovery arguments from params.file
-    def args = params.discovery_params //?: ''
+    // def args = params.discovery_params ?: ''
     """    
     ct discovery \\
         -a ${alignmentFile} \\
         -t ${params.traitfile} \\
         -o ${alignmentID}.output \\
-        --fmt ${params.ali_format} \\ 
+        --fmt ${params.ali_format}
         
     """
     // IDK how to add the params, let's do it in the train and pass onto the next thingie

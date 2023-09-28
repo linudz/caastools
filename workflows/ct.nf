@@ -56,7 +56,7 @@ config = file(params.traitfile)
 */
 
 
-include { ct_discovery } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
+include { ct_discovery } from "${baseDir}/modules/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
 //include { ct_resample } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
 //include { ct_bootstrap } from "${baseDir}/subworkflows/ct_discovery" addParams(ALIGN_TUPLE: align_tuple, LABEL:"twocpus")
 
@@ -73,7 +73,7 @@ def caastools_report = []
 
 
 // ENTRY WORKFLOW MUST BE SET IN THE MAIN.NF
-workflow {
+workflow CT{
     discovery_out = ct_discovery(align_tuple, config)
 }
 
