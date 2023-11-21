@@ -724,8 +724,8 @@ This software is licensed under GNU General Public License. The kind of license 
 
 # 6. How to cite
 
-The application note for CAAStools is [available as a preprint in bioRxiv](https://doi.org/10.1101/2022.12.14.520422).
-
+Barteri, F., Valenzuela, A., Farré, X., de Juan, D., Muntané, G., Esteve-Altava, B., & Navarro, A. (2023). CAAStools: a toolbox to identify and test Convergent Amino Acid Substitutions. Bioinformatics, 39(10), btad623. 
+[Open Access](https://doi.org/10.1093/bioinformatics/btad623)
 
 # 7. Questions and troubleshooting 
 
